@@ -13,4 +13,4 @@ final getIt = GetIt.instance;
 
 /// Configure dependencies
 Future<void> configureDependencies({String env = Environment.dev}) async =>
-    await $initGetIt(getIt);
+     $initGetIt(getIt);
