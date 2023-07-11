@@ -1,6 +1,6 @@
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
 
-/// [UserRepository] interface class
+/// UserRepository interface class
 abstract class UserRepository {
   /// Google Auth
   Future<void> googleAuth();
@@ -32,6 +32,6 @@ abstract class UserRepository {
   /// Get All User
   Stream<List<UserEntity>> getAllUsers({required UserEntity user});
 
-  /// GetSingle User
+  /// Get Single User
   Stream<List<UserEntity>> getSingleUser({required UserEntity user});
 }

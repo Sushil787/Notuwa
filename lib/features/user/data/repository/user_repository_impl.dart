@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
 import 'package:kuraa/features/user/domain/repository/user_remote_data_source.dart';
 import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 
 @Injectable(as: UserRepository)
-
 /// [UserRepository] Implementation Class
 class UserRepositoryImpl implements UserRepository {
   /// User RepoImpl Constructor
@@ -15,56 +15,122 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> forgotPassword({required String email}) {
-    throw UnimplementedError();
+    try {
+      return userRemoteDataSource.forgotPassword(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
   Stream<List<UserEntity>> getAllUsers({required UserEntity user}) {
-    throw UnimplementedError();
+    try {
+      return userRemoteDataSource.getAllUsers(user: user);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
   Future<void> getCreateCurrentUser({required UserEntity user}) {
-    throw UnimplementedError();
+    try {
+      return userRemoteDataSource.getCreateCurrentUser(user: user);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
   Future<String> getCurrentUId() {
-    throw UnimplementedError();
+    try {
+      return userRemoteDataSource.getCurrentUId();
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
   Stream<List<UserEntity>> getSingleUser({required UserEntity user}) {
-    throw UnimplementedError();
+    try {
+      return userRemoteDataSource.getSingleUser(user: user);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
-  Future<void> getUpdateUser({required UserEntity user}) {
-    throw UnimplementedError();
+  Future<void> getUpdateUser({required UserEntity user}) async {
+    try {
+      return await userRemoteDataSource.getUpdateUser(user: user);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
-  Future<void> googleAuth() {
-    throw UnimplementedError();
+  Future<void> googleAuth() async {
+    try {
+      return await userRemoteDataSource.googleAuth();
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
-  Future<bool> isSignIn() {
-    throw UnimplementedError();
+  Future<bool> isSignIn() async {
+    try {
+      return await userRemoteDataSource.isSignIn();
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
-  Future<void> signIn({required UserEntity user}) {
-    throw UnimplementedError();
+  Future<void> signIn({required UserEntity user}) async {
+    try {
+      return await userRemoteDataSource.signIn(user: user);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
-  Future<void> signOut() {
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    try {
+      return await userRemoteDataSource.signOut();
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
-  Future<void> signUp({required UserEntity user}) {
-    throw UnimplementedError();
+  Future<void> signUp({required UserEntity user}) async {
+    try {
+      return await userRemoteDataSource.signUp(user: user);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kuraa/core/routes/app_router.dart';
+import 'package:kuraa/di/di_setup.dart';
 import 'package:kuraa/firebase_options.dart';
 import 'package:kuraa/observer.dart';
 
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await configureDependencies();
   Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
