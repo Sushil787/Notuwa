@@ -4,4 +4,7 @@ class AppRoutes {
 
   /// Home Route
   static const String home = '/';
+
+  /// Login Router
+  static const String login = '/login';
 }

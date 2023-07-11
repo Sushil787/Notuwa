@@ -1,5 +1,5 @@
-/// App Constant
-class AppConstant {
-  AppConstant._();
-  
+/// AppConstants class
+class AppConstants {
+  /// Theme Key
+  static const themeKey = 'isDark';
 }

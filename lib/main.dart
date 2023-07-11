@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kuraa/bloc_providers.dart';
 import 'package:kuraa/core/routes/app_router.dart';
 import 'package:kuraa/di/di_setup.dart';
 import 'package:kuraa/firebase_options.dart';
@@ -13,7 +14,12 @@ void main() async {
   );
   await configureDependencies();
   Bloc.observer = SimpleBlocObserver();
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: getProviders(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 /// Navigator key
@@ -42,7 +48,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   final routerConfig = AppRouter();
-
   /// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

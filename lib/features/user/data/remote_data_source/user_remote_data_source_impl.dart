@@ -220,6 +220,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         email: user.email!,
         password: user.password!,
       );
+      await getCreateCurrentUser(user: user);
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code);
     } catch (e) {
