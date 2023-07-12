@@ -5,6 +5,7 @@ import 'package:kuraa/features/user/domain/repository/user_remote_data_source.da
 import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 
 @Injectable(as: UserRepository)
+
 /// [UserRepository] Implementation Class
 class UserRepositoryImpl implements UserRepository {
   /// User RepoImpl Constructor
