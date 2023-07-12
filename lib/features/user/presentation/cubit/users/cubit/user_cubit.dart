@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
 import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 
 part 'user_state.dart';
 
+@injectable
 /// User Cubit
 class UserCubit extends Cubit<UserState> {
   /// Public Constructor

@@ -35,7 +35,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> loggedIn() async {
     try {
       final uid = await userRepository.getCurrentUId();
-
       emit(Authenticated(uid: uid));
     } catch (_) {
       emit(UnAuthenticated());
