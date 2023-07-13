@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: 5, milliseconds: 500),
       () => context.go(AppRoutes.main),
     );
   }
@@ -44,21 +44,20 @@ class _SplashScreenState extends State<SplashScreen> {
                   FadeAnimatedText(
                     'Stay connected',
                     duration: const Duration(
-                      milliseconds: 500,
+                      milliseconds: 800,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
                   FadeAnimatedText(
-                    'Stay connected',
+                    'Stay engaged ',
                     duration: const Duration(
-                      milliseconds: 500,
+                      milliseconds: 800,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
                   FadeAnimatedText(
                     ' Welcome to our chat universe kuraa',
                     textAlign: TextAlign.center,
-                    duration: const Duration(seconds: 1),
                     textStyle: context.textTheme.headlineLarge,
                   ),
                 ],

@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
 
+/// [ToastType] enum
+enum ToastType {
+  /// Success
+  success,
+
+  /// Error
+  error,
+
+  /// Message
+  message
+}
+
 /// Helper Extension
 extension HelperExtension on BuildContext {
   /// Device Height
@@ -67,13 +79,19 @@ extension HelperExtension on BuildContext {
   }
 
   /// Snackbar Extension
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
-    String message,
-  ) {
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar({
+    required String message,
+    required ToastType toastType,
+  }) {
     return ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         content: Text(message),
         behavior: SnackBarBehavior.floating,
+        backgroundColor: toastType == ToastType.message
+            ? Colors.black
+            : toastType == ToastType.success
+                ? Colors.green
+                : Colors.red,
       ),
     );
   }
