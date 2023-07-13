@@ -14,6 +14,9 @@ class AppRoutes {
   /// Auth Route
   static const String auth = '/auth';
 
+  /// Splash Screen
+  static const String splash = '/splash';
+
   /// Login Router
   static const String login = '/login';
 }
