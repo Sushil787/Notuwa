@@ -16,9 +16,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    // context.watch<AuthCubit>();
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, AuthState state) {
-        return state == Authenticated ? const HomeScreen() : LoginScreen();
+        return state is Authenticated
+            ? const HomeScreen()
+            : const LoginScreen();
       },
     );
   }
