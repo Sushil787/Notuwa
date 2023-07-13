@@ -39,6 +39,9 @@ extension HelperExtension on BuildContext {
 
   Color get cardColor => Theme.of(this).cardColor;
 
+  /// Text Theme Extension getter
+  TextTheme get textTheme => Theme.of(this).textTheme;
+
   /// Erro Color Extension getter
 
   Color get errorColor => Theme.of(this).colorScheme.error;

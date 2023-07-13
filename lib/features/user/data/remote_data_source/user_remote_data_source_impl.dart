@@ -167,8 +167,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       throw FirebaseAuthException(code: e.code);
     } catch (e) {
       log(e.toString());
-      StackTrace.fromString(e.toString());
-
       throw Exception(e);
     }
   }

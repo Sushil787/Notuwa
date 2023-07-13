@@ -5,7 +5,6 @@ import 'package:kuraa/core/constants/app_constants.dart';
 import 'package:kuraa/di/di_setup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 /// Theme cubit
 enum ThemeState {
   /// Light theme
@@ -18,7 +17,7 @@ enum ThemeState {
 /// Theme Cubit
 class ThemeCubit extends Cubit<ThemeState> {
   /// Public Constructor
-  ThemeCubit() : super(ThemeState.light) {
+  ThemeCubit() : super(ThemeState.dark) {
     _loadTheme();
   }
 
