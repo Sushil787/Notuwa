@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
@@ -24,10 +25,10 @@ class SingleUserCubit extends Cubit<SingleUserState> {
       userRepository.getSingleUser(user: user).listen((user) {
         emit(SingleUserLoaded(currentUser: user.first));
       });
-    } on SocketException catch (_) {
-      emit(SingleUserFailure());
+     } on FirebaseException catch (_) {
+      emit(SingleUserFailure(message: _.code));
     } catch (_) {
-      emit(SingleUserFailure());
+      emit(SingleUserFailure(message: _.toString()));
     }
   }
 }

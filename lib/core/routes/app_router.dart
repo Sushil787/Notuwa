@@ -16,7 +16,11 @@ class AppRouter {
     routes: [
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) {
+          return HomeScreen(
+            uid: state.extra! as String,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.main,

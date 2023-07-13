@@ -32,6 +32,11 @@ class UserLoaded extends UserState {
 
 /// Faliure State
 class UserFailure extends UserState {
+  ///
+  const UserFailure({required this.message});
+
+  ///
+  final String message;
   @override
   List<Object> get props => [];
 }

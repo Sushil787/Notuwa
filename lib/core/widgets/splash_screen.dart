@@ -44,14 +44,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   FadeAnimatedText(
                     'Stay connected',
                     duration: const Duration(
-                      milliseconds: 800,
+                      milliseconds: 900,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
                   FadeAnimatedText(
                     'Stay engaged ',
                     duration: const Duration(
-                      milliseconds: 800,
+                      seconds: 1,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),

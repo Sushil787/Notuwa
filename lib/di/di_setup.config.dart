@@ -14,21 +14,22 @@ import 'package:firebase_auth/firebase_auth.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:google_sign_in/google_sign_in.dart' as _i5;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:shared_preferences/shared_preferences.dart' as _i6;
+import 'package:shared_preferences/shared_preferences.dart' as _i7;
 
+import '../core/helper/network_info.dart' as _i6;
 import '../features/user/data/remote_data_source/user_remote_data_source_impl.dart'
-    as _i8;
-import '../features/user/data/repository/user_repository_impl.dart' as _i10;
-import '../features/user/domain/repository/user_remote_data_source.dart' as _i7;
-import '../features/user/domain/repository/user_repository.dart' as _i9;
-import '../features/user/presentation/cubit/auth/cubit/auth_cubit.dart' as _i11;
+    as _i9;
+import '../features/user/data/repository/user_repository_impl.dart' as _i11;
+import '../features/user/domain/repository/user_remote_data_source.dart' as _i8;
+import '../features/user/domain/repository/user_repository.dart' as _i10;
+import '../features/user/presentation/cubit/auth/cubit/auth_cubit.dart' as _i12;
 import '../features/user/presentation/cubit/credential/cubit/credential_cubit.dart'
-    as _i12;
-import '../features/user/presentation/cubit/profile/cubit/single_user_cubit.dart'
     as _i13;
-import '../features/user/presentation/cubit/users/cubit/user_cubit.dart'
+import '../features/user/presentation/cubit/profile/cubit/single_user_cubit.dart'
     as _i14;
-import 'app_module.dart' as _i15;
+import '../features/user/presentation/cubit/users/cubit/user_cubit.dart'
+    as _i15;
+import 'app_module.dart' as _i16;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -45,31 +46,32 @@ Future<_i1.GetIt> $initGetIt(
   );
   final appModule = _$AppModule();
   final sharedPrefsInjectionModule = _$SharedPrefsInjectionModule();
-  gh.factory<_i3.FirebaseAuth>(() => appModule.auth);
-  gh.factory<_i4.FirebaseFirestore>(() => appModule.store);
-  gh.factory<_i5.GoogleSignIn>(() => appModule.googleSignin);
-  await gh.factoryAsync<_i6.SharedPreferences>(
+  gh.singleton<_i3.FirebaseAuth>(appModule.auth);
+  gh.singleton<_i4.FirebaseFirestore>(appModule.store);
+  gh.singleton<_i5.GoogleSignIn>(appModule.googleSignin);
+  gh.factory<_i6.NetworkInfo>(() => _i6.NetworkInfoImpl());
+  await gh.factoryAsync<_i7.SharedPreferences>(
     () => sharedPrefsInjectionModule.prefs,
     preResolve: true,
   );
-  gh.factory<_i7.UserRemoteDataSource>(() => _i8.UserRemoteDataSourceImpl(
+  gh.factory<_i8.UserRemoteDataSource>(() => _i9.UserRemoteDataSourceImpl(
         firebaseFirestore: gh<_i4.FirebaseFirestore>(),
         firebaseAuth: gh<_i3.FirebaseAuth>(),
         googleSignIn: gh<_i5.GoogleSignIn>(),
       ));
-  gh.factory<_i9.UserRepository>(() => _i10.UserRepositoryImpl(
-      userRemoteDataSource: gh<_i7.UserRemoteDataSource>()));
-  gh.factory<_i11.AuthCubit>(
-      () => _i11.AuthCubit(userRepository: gh<_i9.UserRepository>()));
-  gh.factory<_i12.CredentialCubit>(
-      () => _i12.CredentialCubit(userRepository: gh<_i9.UserRepository>()));
-  gh.factory<_i13.SingleUserCubit>(
-      () => _i13.SingleUserCubit(userRepository: gh<_i9.UserRepository>()));
-  gh.factory<_i14.UserCubit>(
-      () => _i14.UserCubit(userRepository: gh<_i9.UserRepository>()));
+  gh.factory<_i10.UserRepository>(() => _i11.UserRepositoryImpl(
+      userRemoteDataSource: gh<_i8.UserRemoteDataSource>()));
+  gh.factory<_i12.AuthCubit>(
+      () => _i12.AuthCubit(userRepository: gh<_i10.UserRepository>()));
+  gh.factory<_i13.CredentialCubit>(
+      () => _i13.CredentialCubit(userRepository: gh<_i10.UserRepository>()));
+  gh.factory<_i14.SingleUserCubit>(
+      () => _i14.SingleUserCubit(userRepository: gh<_i10.UserRepository>()));
+  gh.factory<_i15.UserCubit>(
+      () => _i15.UserCubit(userRepository: gh<_i10.UserRepository>()));
   return getIt;
 }
 
-class _$AppModule extends _i15.AppModule {}
+class _$AppModule extends _i16.AppModule {}
 
-class _$SharedPrefsInjectionModule extends _i15.SharedPrefsInjectionModule {}
+class _$SharedPrefsInjectionModule extends _i16.SharedPrefsInjectionModule {}

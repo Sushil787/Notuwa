@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kuraa/features/app/home/home_screen.dart';
@@ -17,10 +19,20 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     // context.watch<AuthCubit>();
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        log(state.toString());
+        if (state is UnAuthenticated) {
+          log('un uthenticateeeeed');
+        } else if (state is AuthInitial) {
+          log('intital');
+        }
+      },
       builder: (context, AuthState state) {
         return state is Authenticated
-            ? const HomeScreen()
+            ? HomeScreen(
+                uid: state.uid,
+              )
             : const LoginScreen();
       },
     );

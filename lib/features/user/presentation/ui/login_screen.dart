@@ -43,15 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   message: state.message.replaceAll('-', ' '),
                   toastType: ToastType.error,
                 );
-                context.read<AuthCubit>().appStarted();
               }
               if (state is CredentialSuccess) {
                 context
                   ..showSnackBar(
-                    message: 'logged in success',
+                    message: 'log in success',
                     toastType: ToastType.success,
                   )
-                  ..go(AppRoutes.home);
+                  ..go(AppRoutes.home, extra: state.uid);
               }
             },
             builder: (context, state) {

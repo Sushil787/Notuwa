@@ -1,8 +1,6 @@
-import 'dart:io';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
@@ -11,6 +9,7 @@ import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 part 'credential_state.dart';
 
 @injectable
+
 /// Credential Cubit
 class CredentialCubit extends Cubit<CredentialState> {
   /// Credential Cubit
@@ -40,8 +39,8 @@ class CredentialCubit extends Cubit<CredentialState> {
       await userRepository.signIn(
         user: UserEntity(email: email, password: password),
       );
-      emit(CredentialSuccess());
-      
+      final userId = await userRepository.getCurrentUId();
+      emit(CredentialSuccess(userId));
     } on FirebaseException catch (_) {
       emit(CredentialFailure(message: _.code));
     } catch (_) {
@@ -54,7 +53,7 @@ class CredentialCubit extends Cubit<CredentialState> {
     emit(CredentialLoading());
     try {
       await userRepository.signUp(user: user);
-      emit(CredentialSuccess());
+      emit(const CredentialSuccess(''));
     } on FirebaseException catch (_) {
       emit(CredentialFailure(message: _.code));
     } catch (_) {
@@ -67,7 +66,8 @@ class CredentialCubit extends Cubit<CredentialState> {
     emit(CredentialLoading());
     try {
       await userRepository.googleAuth();
-      emit(CredentialSuccess());
+      final userId = await userRepository.getCurrentUId();
+      emit(CredentialSuccess(userId));
     } on FirebaseException catch (_) {
       emit(CredentialFailure(message: _.code));
     } catch (_) {

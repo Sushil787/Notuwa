@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -22,7 +24,9 @@ class AuthCubit extends Cubit<AuthState> {
       if (isSignIn == true) {
         final uid = await userRepository.getCurrentUId();
 
-        emit(Authenticated(uid: uid));
+        emit(
+          Authenticated(uid: uid),
+        );
       } else {
         emit(UnAuthenticated());
       }
@@ -41,11 +45,14 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  /// log out
-  Future<void> logOut() async {
+  /// sign out
+  Future<void> signOut() async {
     try {
       await userRepository.signOut();
-      emit(UnAuthenticated());
+      emit(
+        UnAuthenticated(),
+      );
+      log('i am call here');
     } catch (_) {
       emit(UnAuthenticated());
     }

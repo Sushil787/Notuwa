@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 @module
 abstract class AppModule {
   /// Firestore auth
-  @injectable
+  @singleton
   FirebaseFirestore get store => FirebaseFirestore.instance;
 
   /// FirebaseAuth
-  @injectable
+  @singleton
   FirebaseAuth get auth => FirebaseAuth.instance;
   /// Google Sign in instance
-  @injectable
+  @singleton
   GoogleSignIn get googleSignin => GoogleSignIn();
 }
 

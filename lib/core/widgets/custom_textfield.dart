@@ -62,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textInputAction: TextInputAction.next,
       cursorColor: const Color.fromARGB(31, 74, 68, 68),
       cursorHeight: 20,
-      obscureText: isVisible,
+      obscureText: widget.isPassword && !isVisible,
       decoration: InputDecoration(
         suffixIcon: widget.isPassword
             ? GestureDetector(
@@ -72,8 +72,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   });
                 },
                 child: isVisible
-                    ? const Icon(Icons.visibility_off)
-                    : const Icon(Icons.visibility),
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
               )
             : null,
         prefixIcon: Icon(widget.prefixIcon),

@@ -32,6 +32,12 @@ class SingleUserLoaded extends SingleUserState {
 
 /// Faliure State
 class SingleUserFailure extends SingleUserState {
+  ///
+  const SingleUserFailure({required this.message});
+
+  /// Error Message
+  final String message;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
+
 }

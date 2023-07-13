@@ -20,8 +20,13 @@ class CredentialLoading extends CredentialState {
 
 ///  Credential Success State
 class CredentialSuccess extends CredentialState {
+  ///Constructor
+  const CredentialSuccess(this.uid);
+
+  /// Uid
+  final String uid;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [uid];
 }
 
 /// Credential Faliure State

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
@@ -9,6 +10,7 @@ import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 part 'user_state.dart';
 
 @injectable
+
 /// User Cubit
 class UserCubit extends Cubit<UserState> {
   /// Public Constructor
@@ -24,10 +26,10 @@ class UserCubit extends Cubit<UserState> {
       userRepository.getAllUsers(user: user).listen((users) {
         emit(UserLoaded(users: users));
       });
-    } on SocketException catch (_) {
-      emit(UserFailure());
+    } on FirebaseException catch (_) {
+      emit(UserFailure(message: _.code));
     } catch (_) {
-      emit(UserFailure());
+      emit(UserFailure(message: _.toString()));
     }
   }
 
@@ -35,10 +37,10 @@ class UserCubit extends Cubit<UserState> {
   Future<void> getUpdateUser({required UserEntity user}) async {
     try {
       await userRepository.getUpdateUser(user: user);
-    } on SocketException catch (_) {
-      emit(UserFailure());
+    } on FirebaseException catch (_) {
+      emit(UserFailure(message: _.code));
     } catch (_) {
-      emit(UserFailure());
+      emit(UserFailure(message: _.toString()));
     }
   }
 }
