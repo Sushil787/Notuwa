@@ -7,4 +7,7 @@ class MediaAsset {
 
   /// Google Image Path
   static const googleImage = '$basePath/google.png';
+
+  /// Chatting Gif
+  static const chattingGif = '$basePath/chatting.gif';
 }

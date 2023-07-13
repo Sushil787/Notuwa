@@ -19,8 +19,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   /// user Email
   String? email;
 
-  /// user Password
+  /// Username
+  String? username;
+
+  /// User Password
   String? password;
+
+  /// Confirm Password
+  String? confirmPassword;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -41,52 +47,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: context.secondary,
                 ),
                 VerticalGap.xl,
-                CustomTextField(
-                  prefixIcon: Icons.person,
-                  hintText: 'username',
-                  onChanged: (value) {
-                    setState(() {
-                      email = value;
-                    });
-                  },
-                ),
-                VerticalGap.l,
-                CustomTextField(
-                  prefixIcon: Icons.email,
-                  hintText: 'email',
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                ),
-                VerticalGap.l,
-                dividerWidget(context),
-                VerticalGap.l,
-                CustomTextField(
-                  prefixIcon: Icons.password,
-                  hintText: 'password',
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                  isPassword: true,
-                ),
-                VerticalGap.l,
-                CustomTextField(
-                  prefixIcon: Icons.password,
-                  hintText: 'password',
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                  isPassword: true,
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        prefixIcon: Icons.person,
+                        hintText: 'username',
+                        onChanged: (value) {
+                          username = value;
+                        },
+                      ),
+                      VerticalGap.l,
+                      CustomTextField(
+                        prefixIcon: Icons.email,
+                        hintText: 'email',
+                        onChanged: (value) {
+                          email = value;
+                        },
+                      ),
+                      VerticalGap.l,
+                      dividerWidget(context),
+                      VerticalGap.l,
+                      CustomTextField(
+                        prefixIcon: Icons.password,
+                        hintText: 'password',
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        isPassword: true,
+                      ),
+                      VerticalGap.l,
+                      CustomTextField(
+                        prefixIcon: Icons.password,
+                        hintText: 'confirm password',
+                        onChanged: (value) {
+                          confirmPassword = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'please enter confirm password';
+                          } else if (password != confirmPassword) {
+                            return "confirm password didn't matched";
+                          }
+                          return null;
+                        },
+                        isPassword: true,
+                      ),
+                    ],
+                  ),
                 ),
                 VerticalGap.exl,
                 CustomElevatedButton(
-                  onButtonPressed: () {},
+                  onButtonPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      
+                    }
+                  },
                   buttonText: 'Register',
                 ),
                 VerticalGap.m,

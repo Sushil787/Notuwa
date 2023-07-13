@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuraa/core/helper/extension/string_extension.dart';
 
 /// Custon Text Field
 class CustomTextField extends StatefulWidget {
@@ -7,12 +8,16 @@ class CustomTextField extends StatefulWidget {
     required this.hintText,
     required this.onChanged,
     required this.prefixIcon,
+    this.validator,
     this.isPassword = false,
     super.key,
   });
 
   /// Hint text
   final String hintText;
+
+  /// Hint text
+  String? Function(String?)? validator;
 
   /// Is Pasword Field
   final bool isPassword;
@@ -36,12 +41,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'please enter your ${widget.hintText}';
-        }
-        return null;
-      },
+      validator: widget.validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return 'please enter your ${widget.hintText}';
+            } else if (value.isNotEmpty &&
+                widget.hintText == 'email' &&
+                !value.isValidEmail()) {
+              return 'please enter valid email';
+            }
+            return null;
+          },
       onChanged: (newValue) {
         widget.onChanged.call(newValue);
       },

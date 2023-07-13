@@ -24,6 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
   /// user Password
   String? password;
 
+  /// Form Key
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,25 +43,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: context.secondary,
               ),
               VerticalGap.xl,
-              CustomTextField(
-                prefixIcon: Icons.email,
-                hintText: 'Email',
-                onChanged: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-              VerticalGap.l,
-              CustomTextField(
-                prefixIcon: Icons.password,
-                hintText: 'password',
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-                isPassword: true,
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      prefixIcon: Icons.email,
+                      hintText: 'Email',
+                      onChanged: (value) {
+                        email = value;
+                      },
+                    ),
+                    VerticalGap.l,
+                    CustomTextField(
+                      prefixIcon: Icons.password,
+                      hintText: 'password',
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      isPassword: true,
+                    ),
+                  ],
+                ),
               ),
               VerticalGap.exl,
               CustomElevatedButton(
