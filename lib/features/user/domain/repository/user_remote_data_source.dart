@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
+import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 
 /// UserRemote Data Source
 abstract class UserRemoteDataSource {
@@ -34,4 +37,7 @@ abstract class UserRemoteDataSource {
 
   /// GetSingle User
   Stream<List<UserEntity>> getSingleUser({required UserEntity user});
+
+  /// Auth State Change Stream
+  Stream<User?> authStateChange();
 }

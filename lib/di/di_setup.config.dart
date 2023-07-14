@@ -26,9 +26,7 @@ import '../features/user/presentation/cubit/credential/cubit/auth_cubit.dart'
     as _i12;
 import '../features/user/presentation/cubit/profile/cubit/profile_cubit.dart'
     as _i13;
-import '../features/user/presentation/cubit/users/cubit/user_cubit.dart'
-    as _i14;
-import 'app_module.dart' as _i15;
+import 'app_module.dart' as _i14;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -64,11 +62,9 @@ Future<_i1.GetIt> $initGetIt(
       _i12.AuthCubit(userRepository: gh<_i10.UserRepository>()));
   gh.factory<_i13.ProfileCubit>(
       () => _i13.ProfileCubit(userRepository: gh<_i10.UserRepository>()));
-  gh.factory<_i14.UserCubit>(
-      () => _i14.UserCubit(userRepository: gh<_i10.UserRepository>()));
   return getIt;
 }
 
-class _$AppModule extends _i15.AppModule {}
+class _$AppModule extends _i14.AppModule {}
 
-class _$SharedPrefsInjectionModule extends _i15.SharedPrefsInjectionModule {}
+class _$SharedPrefsInjectionModule extends _i14.SharedPrefsInjectionModule {}

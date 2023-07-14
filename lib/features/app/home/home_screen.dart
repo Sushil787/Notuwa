@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kuraa/core/theme/theme_cubit.dart';
-import 'package:kuraa/di/di_setup.dart';
-
+import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 
 /// Home Screen
@@ -21,6 +19,16 @@ class _HomeScrenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Maan ka Kura',
+        ),
+        actions: const [
+          Icon(Icons.search),
+          HorizontalGap.m,
+          Icon(Icons.more_vert),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

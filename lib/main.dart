@@ -8,7 +8,6 @@ import 'package:kuraa/core/theme/theme_cubit.dart';
 import 'package:kuraa/di/di_setup.dart';
 import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
-import 'package:kuraa/features/user/presentation/cubit/users/cubit/user_cubit.dart';
 import 'package:kuraa/firebase_options.dart';
 import 'package:kuraa/observer.dart';
 
@@ -31,16 +30,11 @@ void main() async {
         BlocProvider(
           create: (context) => getIt<ProfileCubit>(),
         ),
-        BlocProvider(
-          create: (context) => getIt<UserCubit>(),
-        )
       ],
       child: const MyApp(),
     ),
   );
 }
-
-
 
 /// MyApp
 class MyApp extends StatefulWidget {
@@ -72,6 +66,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           routerConfig: routerConfig.router,
           title: 'Chat appa',
           theme: AppTheme.lightThemeData,

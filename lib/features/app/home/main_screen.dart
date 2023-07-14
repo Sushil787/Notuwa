@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kuraa/di/di_setup.dart';
 import 'package:kuraa/features/app/home/home_screen.dart';
+import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 import 'package:kuraa/features/user/presentation/ui/login_screen.dart';
 
@@ -18,19 +20,16 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    context.read<AuthCubit>().appStarted();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
-        log(state.toString(), name: 'listner is listeing.');
-      },
-      builder: (context, state) {
-        return state is Authenticated
-            ? HomeScreen(uid: state.uid)
+    return StreamBuilder(
+      stream: getIt<UserRepository>().authStateChange(),
+      builder: (context, snapshot) {
+        return snapshot.data?.uid != null
+            ? HomeScreen(uid: snapshot.data!.uid)
             : const LoginScreen();
       },
     );

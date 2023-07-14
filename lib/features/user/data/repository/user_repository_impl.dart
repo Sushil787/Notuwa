@@ -59,6 +59,17 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Stream<User?> authStateChange() {
+    try {
+      return userRemoteDataSource.authStateChange();
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
   Stream<List<UserEntity>> getSingleUser({required UserEntity user}) {
     try {
       return userRemoteDataSource.getSingleUser(user: user);

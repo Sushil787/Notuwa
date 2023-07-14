@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
 
 /// UserRepository interface class
@@ -22,6 +23,9 @@ abstract class UserRepository {
 
   /// SignOut User
   Future<void> signOut();
+
+  /// Auth State Change Stream
+  Stream<User?> authStateChange();
 
   /// Updated USer
   Future<void> getUpdateUser({required UserEntity user});

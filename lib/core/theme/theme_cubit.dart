@@ -17,7 +17,7 @@ enum ThemeState {
 /// Theme Cubit
 class ThemeCubit extends Cubit<ThemeState> {
   /// Public Constructor
-  ThemeCubit() : super(ThemeState.dark) {
+  ThemeCubit() : super(ThemeState.light) {
     _loadTheme();
   }
 
