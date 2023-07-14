@@ -6,9 +6,8 @@ import 'package:kuraa/core/routes/app_router.dart';
 import 'package:kuraa/core/theme/app_theme.dart';
 import 'package:kuraa/core/theme/theme_cubit.dart';
 import 'package:kuraa/di/di_setup.dart';
-import 'package:kuraa/features/user/presentation/cubit/auth/cubit/auth_cubit.dart';
-import 'package:kuraa/features/user/presentation/cubit/credential/cubit/credential_cubit.dart';
-import 'package:kuraa/features/user/presentation/cubit/profile/cubit/single_user_cubit.dart';
+import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
+import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
 import 'package:kuraa/features/user/presentation/cubit/users/cubit/user_cubit.dart';
 import 'package:kuraa/firebase_options.dart';
 import 'package:kuraa/observer.dart';
@@ -27,13 +26,10 @@ void main() async {
           create: (context) => ThemeCubit(),
         ),
         BlocProvider(
-          create: (context) => getIt<AuthCubit>()..appStarted(),
+          create: (context) => getIt<AuthCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<CredentialCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<SingleUserCubit>(),
+          create: (context) => getIt<ProfileCubit>(),
         ),
         BlocProvider(
           create: (context) => getIt<UserCubit>(),
@@ -44,8 +40,7 @@ void main() async {
   );
 }
 
-/// Navigator key
-GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
 
 /// MyApp
 class MyApp extends StatefulWidget {
@@ -78,7 +73,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       builder: (context, state) {
         return MaterialApp.router(
           routerConfig: routerConfig.router,
-          key: _navigatorKey,
           title: 'Chat appa',
           theme: AppTheme.lightThemeData,
           darkTheme: AppTheme.darkThemeData,

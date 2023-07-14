@@ -8,7 +8,7 @@ import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/widgets/custom_button.dart';
 import 'package:kuraa/core/widgets/custom_textfield.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
-import 'package:kuraa/features/user/presentation/cubit/credential/cubit/credential_cubit.dart';
+import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 
 /// Login Page
 
@@ -42,15 +42,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: BlocConsumer<CredentialCubit, CredentialState>(
+            child: BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
-                if (state is CredentialFailure) {
+                if (state is AuthFailure) {
                   context.showSnackBar(
                     message: state.message.replaceAll('-', ' '),
                     toastType: ToastType.error,
                   );
                 }
-                if (state is CredentialSuccess) {
+                if (state is SignupSuccess) {
                   context
                     ..showSnackBar(
                       message: 'Signup successful',
@@ -124,7 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     CustomElevatedButton(
                       onButtonPressed: () {
                         if (formKey.currentState!.validate()) {
-                          context.read<CredentialCubit>().signUp(
+                          context.read<AuthCubit>().signUp(
                                 user: UserEntity(
                                   uname: username,
                                   password: password,
@@ -133,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               );
                         }
                       },
-                      isLoading: state is CredentialLoading,
+                      isLoading: state is AuthLoading,
                       buttonText: 'Register',
                     ),
                     VerticalGap.m,
@@ -171,7 +171,7 @@ class GoogleSigninButton extends StatelessWidget {
     return Align(
       child: GestureDetector(
         onTap: () {
-          context.read<CredentialCubit>().googleSignin();
+          context.read<AuthCubit>().googleSignin();
         },
         child: CircleAvatar(
           backgroundColor: context.onPrimary,

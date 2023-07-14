@@ -1,27 +1,27 @@
-part of 'single_user_cubit.dart';
+part of 'profile_cubit.dart';
 
 /// Single User State
-abstract class SingleUserState extends Equatable {
+abstract class ProfileState extends Equatable {
   ///
-  const SingleUserState();
+  const ProfileState();
 }
 
 /// Initial State
-class SingleUserInitial extends SingleUserState {
+class ProfileInitial extends ProfileState {
   @override
   List<Object> get props => [];
 }
 
 /// Loading State
-class SingleUserLoading extends SingleUserState {
+class ProfileLoading extends ProfileState {
   @override
   List<Object> get props => [];
 }
 
 /// Single User Loaded State
-class SingleUserLoaded extends SingleUserState {
+class ProfileLoaded extends ProfileState {
   ///
-  const SingleUserLoaded({required this.currentUser});
+  const ProfileLoaded({required this.currentUser});
 
   /// Current User
   final UserEntity currentUser;
@@ -31,13 +31,12 @@ class SingleUserLoaded extends SingleUserState {
 }
 
 /// Faliure State
-class SingleUserFailure extends SingleUserState {
+class ProfileFailure extends ProfileState {
   ///
-  const SingleUserFailure({required this.message});
+  const ProfileFailure({required this.message});
 
   /// Error Message
   final String message;
   @override
   List<Object> get props => [message];
-
 }

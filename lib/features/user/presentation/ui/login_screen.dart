@@ -7,8 +7,7 @@ import 'package:kuraa/core/helper/extension/context_extension.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/widgets/custom_button.dart';
 import 'package:kuraa/core/widgets/custom_textfield.dart';
-import 'package:kuraa/features/user/presentation/cubit/auth/cubit/auth_cubit.dart';
-import 'package:kuraa/features/user/presentation/cubit/credential/cubit/credential_cubit.dart';
+import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 
 /// Login Page
 
@@ -36,15 +35,15 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: BlocConsumer<CredentialCubit, CredentialState>(
+          child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
-              if (state is CredentialFailure) {
+              if (state is AuthFailure) {
                 context.showSnackBar(
                   message: state.message.replaceAll('-', ' '),
                   toastType: ToastType.error,
                 );
               }
-              if (state is CredentialSuccess) {
+              if (state is Authenticated) {
                 context
                   ..showSnackBar(
                     message: 'log in success',
@@ -89,10 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   VerticalGap.exl,
                   CustomElevatedButton(
-                    isLoading: state is CredentialLoading,
+                    isLoading: state is AuthLoading,
                     onButtonPressed: () {
                       if (formKey.currentState!.validate()) {
-                        context.read<CredentialCubit>().signIn(
+                        context.read<AuthCubit>().signIn(
                               email: email!,
                               password: password!,
                             );
@@ -126,7 +125,7 @@ class GoogleSigninButton extends StatelessWidget {
     return Align(
       child: GestureDetector(
         onTap: () {
-          context.read<CredentialCubit>().googleSignin();
+          context.read<AuthCubit>().googleSignin();
         },
         child: CircleAvatar(
           backgroundColor: context.onPrimary,

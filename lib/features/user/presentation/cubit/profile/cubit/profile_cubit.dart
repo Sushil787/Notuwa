@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,28 +6,29 @@ import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
 import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 
-part 'single_user_state.dart';
+part 'profile_state.dart';
 
 @injectable
+
 /// Single User Cubit
-class SingleUserCubit extends Cubit<SingleUserState> {
+class ProfileCubit extends Cubit<ProfileState> {
   /// Constructor
-  SingleUserCubit({required this.userRepository}) : super(SingleUserInitial());
+  ProfileCubit({required this.userRepository}) : super(ProfileInitial());
 
   /// User Repository
   final UserRepository userRepository;
 
   /// Gets The User Profile
-  Future<void> getSingleUserProfile({required UserEntity user}) async {
-    emit(SingleUserLoading());
+  Future<void> getProfileProfile({required UserEntity user}) async {
+    emit(ProfileLoading());
     try {
       userRepository.getSingleUser(user: user).listen((user) {
-        emit(SingleUserLoaded(currentUser: user.first));
+        emit(ProfileLoaded(currentUser: user.first));
       });
-     } on FirebaseException catch (_) {
-      emit(SingleUserFailure(message: _.code));
+    } on FirebaseException catch (_) {
+      emit(ProfileFailure(message: _.code));
     } catch (_) {
-      emit(SingleUserFailure(message: _.toString()));
+      emit(ProfileFailure(message: _.toString()));
     }
   }
 }

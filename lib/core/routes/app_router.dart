@@ -1,18 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kuraa/core/constants/route_constants.dart';
 import 'package:kuraa/core/widgets/splash_screen.dart';
 import 'package:kuraa/features/app/home/home_screen.dart';
 import 'package:kuraa/features/app/home/main_screen.dart';
+import 'package:kuraa/features/user/presentation/ui/login_screen.dart';
 import 'package:kuraa/features/user/presentation/ui/signup_screen.dart';
-
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 /// AppRouter
 class AppRouter {
   final GoRouter _router = GoRouter(
     initialLocation: AppRoutes.splash,
-    navigatorKey: _rootNavigatorKey,
     routes: [
       GoRoute(
         path: AppRoutes.home,
@@ -25,6 +22,11 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.main,
         builder: (context, state) => const MainScreen(),
+      ),
+      GoRoute(
+        name: AppRoutes.login,
+        path: AppRoutes.login,
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: AppRoutes.signup,

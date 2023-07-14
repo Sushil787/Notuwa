@@ -36,7 +36,24 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 180,
               child: Image.asset(MediaAsset.chattingGif),
             ),
-            VerticalGap.l,
+            SizedBox(
+              height: 50,
+              child: AnimatedTextKit(
+                animatedTexts: [
+                  ColorizeAnimatedText(
+                    'Kuraaa',
+                    colors: [
+                      Colors.purple,
+                      Colors.blue,
+                      Colors.black,
+                      Colors.yellow,
+                    ],
+                    textStyle: context.textTheme.headlineLarge!,
+                  ),
+                ],
+              ),
+            ),
+            VerticalGap.m,
             SizedBox(
               height: 70,
               child: AnimatedTextKit(
@@ -44,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   FadeAnimatedText(
                     'Stay connected',
                     duration: const Duration(
-                      milliseconds: 900,
+                      seconds: 1,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
