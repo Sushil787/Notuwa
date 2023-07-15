@@ -40,7 +40,6 @@ class _HomeScrenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: () async {
                 await context.read<AuthCubit>().signOut();
-                // await getIt<AuthCubit>().signOut();
               },
               child: const Text('signout'),
             ),
