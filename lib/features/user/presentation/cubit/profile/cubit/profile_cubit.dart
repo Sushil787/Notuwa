@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,11 +20,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UserRepository userRepository;
 
   /// Gets The User Profile
-  Future<void> getProfileProfile({required UserEntity user}) async {
+  Future<void> getProfileProfile({required String uid}) async {
     emit(ProfileLoading());
     try {
-      userRepository.getSingleUser(user: user).listen((user) {
+      userRepository.getSingleUser(uid: uid).listen((user) {
         emit(ProfileLoaded(currentUser: user.first));
+        log(user.toString());
       });
     } on FirebaseException catch (_) {
       emit(ProfileFailure(message: _.code));

@@ -5,11 +5,6 @@ import 'package:kuraa/core/theme/app_colors.dart';
 
 /// Class defining theme of the application
 class AppTheme {
-  /// Returns the theme of the app
-  // static ThemeData getTheme(ThemeState state) {
-  //   return state == ThemeState.light ? lightThemeData : darkThemeData;
-  // }
-
   /// Light Theme
   static final ThemeData lightThemeData = ThemeData(
     fontFamily: GoogleFonts.poppins().fontFamily,
@@ -101,6 +96,7 @@ class AppTheme {
       ),
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: LightColor.primaryColor,
       secondary: LightColor.primaryColor,
       brightness: Brightness.light,
       onSecondary: LightColor.secondaryColor,

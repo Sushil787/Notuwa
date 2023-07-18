@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: AnimatedTextKit(
                 animatedTexts: [
                   ColorizeAnimatedText(
-                    'Kuraaa',
+                    'Maan ka Kuraaa',
                     colors: [
                       Colors.purple,
                       Colors.blue,
@@ -59,21 +59,21 @@ class _SplashScreenState extends State<SplashScreen> {
               child: AnimatedTextKit(
                 animatedTexts: [
                   FadeAnimatedText(
-                    'Stay connected',
+                    'Streamlined',
                     duration: const Duration(
                       seconds: 1,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
                   FadeAnimatedText(
-                    'Stay engaged ',
+                    'Personalized ',
                     duration: const Duration(
                       seconds: 1,
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
                   FadeAnimatedText(
-                    ' Welcome to our chat universe kuraa',
+                    ' Welcome to maan ka kuraa',
                     textAlign: TextAlign.center,
                     textStyle: context.textTheme.headlineLarge,
                   ),

@@ -37,5 +37,5 @@ abstract class UserRepository {
   Stream<List<UserEntity>> getAllUsers({required UserEntity user});
 
   /// Get Single User
-  Stream<List<UserEntity>> getSingleUser({required UserEntity user});
+  Stream<List<UserEntity>> getSingleUser({required String uid});
 }

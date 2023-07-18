@@ -5,6 +5,9 @@ class AppRoutes {
   /// Main Screen
   static const String main = '/main';
 
+  /// Note Screen
+  static const String note = '/note';
+
   /// Home Route
   static const String home = '/';
 
@@ -19,4 +22,7 @@ class AppRoutes {
 
   /// Login Router
   static const String login = '/login';
+
+  /// Profile Screen
+  static const String profile = '/profile';
 }

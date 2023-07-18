@@ -7,7 +7,6 @@ import 'package:kuraa/features/user/domain/repository/user_repository.dart';
 part 'auth_state.dart';
 
 @singleton
-
 /// Auth Cubit
 class AuthCubit extends Cubit<AuthState> {
   /// Auth Cubit

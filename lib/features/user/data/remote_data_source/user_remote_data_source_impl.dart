@@ -98,12 +98,12 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Stream<List<UserEntity>> getSingleUser({required UserEntity user}) {
+  Stream<List<UserEntity>> getSingleUser({required String uid}) {
     try {
       final userCollection = firebaseFirestore.collection('users');
       return userCollection
           .limit(1)
-          .where('uid', isEqualTo: user.uid)
+          .where('uid', isEqualTo: uid)
           .snapshots()
           .map(
         (querySnapshot) {

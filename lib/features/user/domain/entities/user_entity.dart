@@ -36,7 +36,6 @@ class UserEntity extends Equatable {
         email,
         password,
         uid,
-        status,
         profileUrl,
       ];
 }

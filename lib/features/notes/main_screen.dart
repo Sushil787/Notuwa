@@ -1,11 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kuraa/di/di_setup.dart';
-import 'package:kuraa/features/app/home/home_screen.dart';
+import 'package:kuraa/features/notes/home_screen.dart';
 import 'package:kuraa/features/user/domain/repository/user_repository.dart';
-import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 import 'package:kuraa/features/user/presentation/ui/login_screen.dart';
 
 /// MainScreen

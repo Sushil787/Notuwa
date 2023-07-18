@@ -19,7 +19,6 @@ class UserModel extends UserEntity {
       uname: snapshotMap['uname'] as String,
       email: snapshotMap['email'] as String,
       profileUrl: snapshotMap['profileUrl'] as String,
-      status: snapshotMap['status'] as String,
       uid: snapshotMap['uid'] as String,
     );
   }
