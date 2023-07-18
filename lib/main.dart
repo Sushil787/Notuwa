@@ -6,6 +6,7 @@ import 'package:kuraa/core/routes/app_router.dart';
 import 'package:kuraa/core/theme/app_theme.dart';
 import 'package:kuraa/core/theme/theme_cubit.dart';
 import 'package:kuraa/di/di_setup.dart';
+import 'package:kuraa/features/notes/cubit/note_cubit.dart';
 import 'package:kuraa/features/user/presentation/cubit/credential/cubit/auth_cubit.dart';
 import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
 import 'package:kuraa/firebase_options.dart';
@@ -29,6 +30,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => getIt<ProfileCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<NoteCubit>(),
         ),
       ],
       child: const MyApp(),

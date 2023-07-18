@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<ProfileCubit>().getProfileProfile(uid: widget.uid);
+    context.read<NoteCubit>().getNotes();
   }
 
   @override
@@ -47,36 +48,30 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints.expand(height: 100, width: 200),
-          child: GestureDetector(
-            onTap: () {
-              final firebaseFirestore = FirebaseFirestore.instance;
-              final uid = FirebaseAuth.instance.currentUser!.uid;
-              firebaseFirestore
-                  .collection('notes')
-                  .doc(uid)
-                  .collection('note')
-                  .add({'name ': 'ram ram', 'age': 23});
-            },
-            child: Container(
-              color: Colors.red,
-            ),
-          ),
+        child: BlocConsumer<NoteCubit, NoteState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is NoteLoadedState) {
+              if (state.notes.isEmpty) {
+                return const Text('No Notes Added');
+              }
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) {
+                  return const Text('hello');
+                },
+              );
+            }
+            if (state is NoteLoadingState) {
+              return const CircularProgressIndicator(
+                color: LightColor.grey,
+              );
+            }
+            return const Text('No Data');
+          },
         ),
-        // child: BlocBuilder<NoteCubit, NoteState>(
-        //   builder: (context, state) {
-        //     return GridView.builder(
-        //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //         crossAxisCount: 2,
-        //       ),
-        //       itemBuilder: (context, index) {
-        //         return null;
-
-        //       },
-        //     );
-        //   },
-        // ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: LightColor.eclipse,

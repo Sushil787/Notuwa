@@ -1,4 +1,4 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -29,6 +29,17 @@ class NoteCubit extends Cubit<NoteState> {
 
   /// GetNote Method
   Future<void> getNotes() async {
+    try {
+      emit(NoteLoadingState());
+      noteRepository.getNotes().listen((notes) {
+        emit(NoteLoadedState(notes));
+      });
+    } on FirebaseException catch (e) {
+      throw FirebaseException(code: e.code, plugin: '');
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+
     emit(state);
   }
 
