@@ -4,7 +4,7 @@ import 'package:kuraa/core/helper/extension/string_extension.dart';
 /// Custon Text Field
 class CustomTextField extends StatefulWidget {
   /// Constructor
-  CustomTextField({
+   CustomTextField({
     required this.hintText,
     required this.onChanged,
     required this.prefixIcon,

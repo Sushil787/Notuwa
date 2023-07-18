@@ -20,32 +20,14 @@ class NoteScreen extends StatefulWidget {
 class _NoteScreenState extends State<NoteScreen> {
   String? imagePath;
   bool editMode = false;
+  final TextEditingController titleEditingController = TextEditingController();
+  final TextEditingController bodyEditingController = TextEditingController();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('noteTitle'),
-        leading: GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: const Icon(Icons.arrow_back),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                editMode = !editMode;
-              });
-            },
-            child: const Icon(
-              Icons.edit_note_outlined,
-              size: 30,
-            ),
-          ),
-          HorizontalGap.l,
-        ],
-      ),
+      appBar: appBar(context),
       body: Container(
         margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
         child: SingleChildScrollView(
@@ -57,42 +39,104 @@ class _NoteScreenState extends State<NoteScreen> {
                 style: context.textTheme.bodyMedium,
               ),
               VerticalGap.xs,
-              TextField(
-                keyboardType: TextInputType.multiline,
-                readOnly: !editMode,
-              ),
-              VerticalGap.l,
-              if (imagePath != null)
-                SizedBox(
-                  child: Image.file(File(imagePath!)),
-                )
-              else
-                const SizedBox.shrink(),
-              VerticalGap.l,
-              CustomElevatedButton(
-                onButtonPressed: () async {
-                  await bottomSheet(context);
-                },
-                buttonText: 'Upload Image',
-              ),
-              VerticalGap.l,
-              const Text('note body'),
-              VerticalGap.xs,
-              TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: editMode ? 18 : 20,
-                readOnly: !editMode,
-              ),
+              formWidget(context),
               VerticalGap.l,
               if (editMode)
                 CustomElevatedButton(
                   buttonText: 'Save',
-                  onButtonPressed: () {},
+                  onButtonPressed: () {
+                    if (formKey.currentState!.validate()) {}
+                  },
                 )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  /// Form
+  Form formWidget(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            controller: titleEditingController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'No Empty Title Allowed';
+              }
+              return '';
+            },
+            keyboardType: TextInputType.multiline,
+            readOnly: !editMode,
+          ),
+          VerticalGap.l,
+          if (imagePath != null)
+            SizedBox(
+              child: Image.file(File(imagePath!)),
+            )
+          else
+            const SizedBox.shrink(),
+          VerticalGap.l,
+          CustomElevatedButton(
+            onButtonPressed: () async {
+              await bottomSheet(context);
+            },
+            buttonText: 'Upload Image',
+          ),
+          VerticalGap.l,
+          const Text('note body'),
+          VerticalGap.xs,
+          TextFormField(
+            controller: bodyEditingController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'No Empty Title Allowed';
+              }
+              return '';
+            },
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 10,
+              ),
+            ),
+            keyboardType: TextInputType.multiline,
+            maxLines: editMode ? 18 : 20,
+            readOnly: !editMode,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// AppBar widget
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+      title: const Text('noteTitle'),
+      leading: GestureDetector(
+        onTap: () {
+          context.pop();
+        },
+        child: const Icon(Icons.arrow_back),
+      ),
+      actions: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              editMode = !editMode;
+            });
+          },
+          child: const Icon(
+            Icons.edit_note_outlined,
+            size: 30,
+          ),
+        ),
+        HorizontalGap.l,
+      ],
     );
   }
 

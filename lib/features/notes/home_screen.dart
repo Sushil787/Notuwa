@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +7,7 @@ import 'package:kuraa/core/constants/route_constants.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/theme/app_colors.dart';
 import 'package:kuraa/features/notes/cubit/note_cubit.dart';
+import 'package:kuraa/features/user/data/model/user_model.dart';
 import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
 import 'package:kuraa/features/user/presentation/ui/widgets/profile_widget.dart';
 
@@ -32,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Maan ka Kura',
+          'Mero Note',
         ),
         actions: [
           ProfileWidget(
@@ -46,8 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints.expand(height: 100, width: 200),
-          child: Container(
-            color: Colors.red,
+          child: GestureDetector(
+            onTap: () {
+              final firebaseFirestore = FirebaseFirestore.instance;
+              final uid = FirebaseAuth.instance.currentUser!.uid;
+              firebaseFirestore
+                  .collection('notes')
+                  .doc(uid)
+                  .collection('note')
+                  .add({'name ': 'ram ram', 'age': 23});
+            },
+            child: Container(
+              color: Colors.red,
+            ),
           ),
         ),
         // child: BlocBuilder<NoteCubit, NoteState>(

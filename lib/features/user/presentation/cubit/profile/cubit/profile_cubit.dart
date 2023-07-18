@@ -20,7 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UserRepository userRepository;
 
   /// Gets The User Profile
-  Future<void> getProfileProfile({required String uid}) async {
+  void getProfileProfile({required String uid}) {
     emit(ProfileLoading());
     try {
       userRepository.getSingleUser(uid: uid).listen((user) {

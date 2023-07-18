@@ -124,51 +124,49 @@ class ProfileImage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14),
       height: context.height * .4,
       width: double.maxFinite,
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Profile',
-              style: context.textTheme.headlineLarge,
-            ),
-            VerticalGap.s,
-            CircleAvatar(
-              radius: 44,
-              backgroundColor: context.secondary,
-              child: user.profileUrl != null
-                  ? CircleAvatar(
-                      radius: 40,
-                      backgroundColor: context.primary,
-                      backgroundImage: NetworkImage(user.profileUrl!),
-                    )
-                  : CircleAvatar(
-                      backgroundColor: context.primary,
-                      child: Text(
-                        user.uname![0],
-                        style: context.textTheme.headlineLarge,
-                      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Profile',
+            style: context.textTheme.headlineLarge,
+          ),
+          VerticalGap.s,
+          CircleAvatar(
+            radius: 44,
+            backgroundColor: context.secondary,
+            child: user.profileUrl != null
+                ? CircleAvatar(
+                    radius: 40,
+                    backgroundColor: context.primary,
+                    backgroundImage: NetworkImage(user.profileUrl!),
+                  )
+                : CircleAvatar(
+                    backgroundColor: context.primary,
+                    child: Text(
+                      user.uname![0],
+                      style: context.textTheme.headlineLarge,
                     ),
-            ),
-            customText(
-              type: 'username',
-              text: user.uname!,
-              context: context,
-            ),
-            VerticalGap.s,
-            customText(
-              type: 'uid',
-              text: user.uid!,
-              context: context,
-            ),
-            VerticalGap.s,
-            customText(
-              type: 'email',
-              text: user.email!,
-              context: context,
-            ),
-          ],
-        ),
+                  ),
+          ),
+          customText(
+            type: 'username',
+            text: user.uname!,
+            context: context,
+          ),
+          VerticalGap.s,
+          customText(
+            type: 'uid',
+            text: user.uid!,
+            context: context,
+          ),
+          VerticalGap.s,
+          customText(
+            type: 'email',
+            text: user.email!,
+            context: context,
+          ),
+        ],
       ),
     );
   }
@@ -189,7 +187,7 @@ Widget customText({
           style: context.textTheme.bodySmall,
         ),
         Container(
-          width: context.width * .8,
+          width: context.width,
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(color: context.primary),
