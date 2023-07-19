@@ -18,7 +18,7 @@ class UserModel extends UserEntity {
     return UserModel(
       uname: snapshotMap['uname'] as String,
       email: snapshotMap['email'] as String,
-      profileUrl: snapshotMap['profileUrl'] as String,
+      profileUrl: snapshotMap['profileUrl'] as String?,
       uid: snapshotMap['uid'] as String,
     );
   }

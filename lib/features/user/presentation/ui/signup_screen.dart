@@ -70,56 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: context.secondary,
                     ),
                     VerticalGap.xl,
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          CustomTextField(
-                            prefixIcon: Icons.person,
-                            hintText: 'username',
-                            onChanged: (value) {
-                              username = value;
-                            },
-                          ),
-                          VerticalGap.l,
-                          CustomTextField(
-                            prefixIcon: Icons.email,
-                            hintText: 'email',
-                            onChanged: (value) {
-                              email = value;
-                            },
-                          ),
-                          VerticalGap.l,
-                          dividerWidget(context),
-                          VerticalGap.l,
-                          CustomTextField(
-                            prefixIcon: Icons.password,
-                            hintText: 'password',
-                            onChanged: (value) {
-                              password = value;
-                            },
-                            isPassword: true,
-                          ),
-                          VerticalGap.l,
-                          CustomTextField(
-                            prefixIcon: Icons.password,
-                            hintText: 'confirm password',
-                            onChanged: (value) {
-                              confirmPassword = value;
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'please enter confirm password';
-                              } else if (password != confirmPassword) {
-                                return "confirm password didn't matched";
-                              }
-                              return null;
-                            },
-                            isPassword: true,
-                          ),
-                        ],
-                      ),
-                    ),
+                    form(context),
                     VerticalGap.exl,
                     CustomElevatedButton(
                       onButtonPressed: () {
@@ -138,13 +89,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     VerticalGap.m,
                     VerticalGap.l,
-                    const GoogleSigninButton()
                   ],
                 );
               },
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  /// Sign up Form
+  Form form(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          CustomTextField(
+            prefixIcon: Icons.person,
+            hintText: 'username',
+            onChanged: (value) {
+              username = value;
+            },
+          ),
+          VerticalGap.l,
+          CustomTextField(
+            prefixIcon: Icons.email,
+            hintText: 'email',
+            onChanged: (value) {
+              email = value;
+            },
+          ),
+          VerticalGap.l,
+          dividerWidget(context),
+          VerticalGap.l,
+          CustomTextField(
+            prefixIcon: Icons.password,
+            hintText: 'password',
+            onChanged: (value) {
+              password = value;
+            },
+            isPassword: true,
+          ),
+          VerticalGap.l,
+          CustomTextField(
+            prefixIcon: Icons.password,
+            hintText: 'confirm password',
+            onChanged: (value) {
+              confirmPassword = value;
+            },
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'please enter confirm password';
+              } else if (password != confirmPassword) {
+                return "confirm password didn't matched";
+              }
+              return null;
+            },
+            isPassword: true,
+          ),
+        ],
       ),
     );
   }
@@ -159,26 +163,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
-///Google Sign in
-class GoogleSigninButton extends StatelessWidget {
-  ///
-  const GoogleSigninButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      child: GestureDetector(
-        onTap: () {
-          context.read<AuthCubit>().googleSignin();
-        },
-        child: CircleAvatar(
-          backgroundColor: context.onPrimary,
-          radius: 22,
-          child: Image.asset(MediaAsset.googleImage),
-        ),
-      ),
-    );
-  }
-}

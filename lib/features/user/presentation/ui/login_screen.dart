@@ -122,15 +122,27 @@ class GoogleSigninButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      child: GestureDetector(
-        onTap: () {
-          context.read<AuthCubit>().googleSignin();
-        },
-        child: CircleAvatar(
-          backgroundColor: context.onPrimary,
-          radius: 22,
-          child: Image.asset(MediaAsset.googleImage),
+    return SizedBox(
+      height: context.height * .07,
+      child: Card(
+        child: Align(
+          child: GestureDetector(
+            onTap: () {
+              context.read<AuthCubit>().googleSignin();
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  backgroundColor: context.onPrimary,
+                  radius: 22,
+                  child: Image.asset(MediaAsset.googleImage),
+                ),
+                HorizontalGap.l,
+                const Text('Signin with google')
+              ],
+            ),
+          ),
         ),
       ),
     );

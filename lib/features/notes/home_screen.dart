@@ -1,7 +1,6 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,10 +9,8 @@ import 'package:kuraa/core/helper/extension/context_extension.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/theme/app_colors.dart';
 import 'package:kuraa/features/notes/cubit/note_cubit.dart';
-import 'package:kuraa/features/user/data/model/user_model.dart';
 import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
 import 'package:kuraa/features/user/presentation/ui/widgets/profile_widget.dart';
-import 'package:uuid/uuid.dart';
 
 /// Home Screen
 
