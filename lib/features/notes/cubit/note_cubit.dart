@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +9,7 @@ import 'package:kuraa/features/notes/domain/repository/note_repository.dart';
 
 part 'note_state.dart';
 
-@singleton
+@injectable
 
 ///Note Cubit
 class NoteCubit extends Cubit<NoteState> {
@@ -18,13 +20,25 @@ class NoteCubit extends Cubit<NoteState> {
   final NoteRepository noteRepository;
 
   /// AddNote Method
-  Future<void> addNote() async {
-    emit(state);
+  Future<void> addNote({required NoteModel note}) async {
+    try {
+      emit(NoteLoadingState());
+      await noteRepository.createNote(note: note);
+      // emit(NoteSuccessState());
+    } on FirebaseException catch (e) {
+      emit(NoteLoadFailState(e.code));
+    } catch (e) {
+      emit(NoteLoadFailState(e.toString()));
+    }
   }
 
   /// UpdateNote Method
   Future<void> updateNote() async {
-    emit(state);
+    try {} on FirebaseException catch (e) {
+      emit(NoteLoadFailState(e.code));
+    } catch (e) {
+      emit(NoteLoadFailState(e.toString()));
+    }
   }
 
   /// GetNote Method
@@ -32,19 +46,22 @@ class NoteCubit extends Cubit<NoteState> {
     try {
       emit(NoteLoadingState());
       noteRepository.getNotes().listen((notes) {
+        log(name: 'mero note', notes.length.toString());
         emit(NoteLoadedState(notes));
       });
     } on FirebaseException catch (e) {
-      throw FirebaseException(code: e.code, plugin: '');
+      emit(NoteLoadFailState(e.code));
     } catch (e) {
-      throw Exception(e.toString());
+      emit(NoteLoadFailState(e.toString()));
     }
-
-    emit(state);
   }
 
   /// Delete Note Method
   Future<void> deleteNotes() async {
-    emit(state);
+    try {} on FirebaseException catch (e) {
+      emit(NoteLoadFailState(e.code));
+    } catch (e) {
+      emit(NoteLoadFailState(e.toString()));
+    }
   }
 }

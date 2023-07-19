@@ -1,12 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kuraa/core/constants/route_constants.dart';
 import 'package:kuraa/core/helper/extension/context_extension.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/theme/app_colors.dart';
 import 'package:kuraa/core/widgets/custom_button.dart';
+import 'package:kuraa/features/notes/cubit/note_cubit.dart';
+import 'package:kuraa/features/notes/domain/model/notes_model.dart';
+import 'package:uuid/uuid.dart';
 
 /// Note Screen
 class NoteScreen extends StatefulWidget {
@@ -22,6 +27,7 @@ class _NoteScreenState extends State<NoteScreen> {
   bool editMode = false;
   final TextEditingController titleEditingController = TextEditingController();
   final TextEditingController bodyEditingController = TextEditingController();
+  final uuid = const Uuid();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -29,26 +35,48 @@ class _NoteScreenState extends State<NoteScreen> {
     return Scaffold(
       appBar: appBar(context),
       body: Container(
-        margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+        margin: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'note title',
-                style: context.textTheme.bodyMedium,
-              ),
-              VerticalGap.xs,
-              formWidget(context),
-              VerticalGap.l,
-              if (editMode)
-                CustomElevatedButton(
-                  buttonText: 'Save',
-                  onButtonPressed: () {
-                    if (formKey.currentState!.validate()) {}
-                  },
-                )
-            ],
+          child: BlocBuilder<NoteCubit, NoteState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'note title',
+                    style: context.textTheme.bodyMedium,
+                  ),
+                  VerticalGap.xs,
+                  formWidget(context),
+                  VerticalGap.l,
+                  if (editMode)
+                    CustomElevatedButton(
+                      isLoading: state is NoteLoadingState,
+                      buttonText: 'Save',
+                      onButtonPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          await context.read<NoteCubit>().addNote(
+                                note: NoteModel(
+                                  title: titleEditingController.text,
+                                  body: bodyEditingController.text,
+                                  id: uuid.v4(),
+                                  imageUrl: imagePath,
+                                ),
+                              );
+                          if (context.mounted) {
+                            context
+                              ..showSnackBar(
+                                message: 'Note Added Successfully',
+                                toastType: ToastType.success,
+                              )
+                              ..pop();
+                          }
+                        }
+                      },
+                    )
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -68,7 +96,7 @@ class _NoteScreenState extends State<NoteScreen> {
               if (value == null || value.isEmpty) {
                 return 'No Empty Title Allowed';
               }
-              return '';
+              return null;
             },
             keyboardType: TextInputType.multiline,
             readOnly: !editMode,
@@ -94,9 +122,9 @@ class _NoteScreenState extends State<NoteScreen> {
             controller: bodyEditingController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'No Empty Title Allowed';
+                return 'No Empty body Allowed';
               }
-              return '';
+              return null;
             },
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.symmetric(
@@ -105,7 +133,7 @@ class _NoteScreenState extends State<NoteScreen> {
               ),
             ),
             keyboardType: TextInputType.multiline,
-            maxLines: editMode ? 18 : 20,
+            maxLines: editMode ? 16 : 20,
             readOnly: !editMode,
           ),
         ],
@@ -124,19 +152,33 @@ class _NoteScreenState extends State<NoteScreen> {
         child: const Icon(Icons.arrow_back),
       ),
       actions: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              editMode = !editMode;
-            });
-          },
-          child: const Icon(
-            Icons.edit_note_outlined,
-            size: 30,
-          ),
-        ),
+        editButton(),
         HorizontalGap.l,
       ],
+    );
+  }
+
+  GestureDetector editButton() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          editMode = !editMode;
+        });
+      },
+      child: Container(
+        height: 32,
+        width: 36,
+        decoration: BoxDecoration(
+          color: editMode ? LightColor.grey : Colors.transparent,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(5),
+          ),
+        ),
+        child: const Icon(
+          Icons.edit_note_rounded,
+          size: 30,
+        ),
+      ),
     );
   }
 

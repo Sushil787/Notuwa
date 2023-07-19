@@ -57,11 +57,11 @@ class CustomElevatedButton extends StatelessWidget {
           ],
           if (isLoading) ...[
             HorizontalGap.l,
-            SizedBox(
+            const SizedBox(
               height: 24,
               width: 24,
               child: CircularProgressIndicator.adaptive(
-                backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                // backgroundColor: Colors.white,
                 strokeWidth: 2.5,
               ),
             )

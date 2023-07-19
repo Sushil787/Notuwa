@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/notes/domain/model/notes_model.dart';
 import 'package:kuraa/features/notes/domain/repository/note_repository.dart';
+import 'package:uuid/uuid.dart';
 
 @Injectable(as: NoteRepository)
 
@@ -33,16 +35,19 @@ class NoteRepoImpl implements NoteRepository {
       final uid = firebaseAuth.currentUser!.uid;
 
       if (note.imageUrl != null) {
-        final storage = firebaseStorage.ref('images/');
-        await storage.putFile(File(note.imageUrl!));
-        final imageUrl = await storage.getDownloadURL();
-        final updatedNoted = note.copyWith(imageUrl: imageUrl);
+        final storage = firebaseStorage.ref('/images/');
+
+        const imageId = Uuid();
+        final uploadTask =
+            await storage.child(imageId.v4()).putFile(File(note.imageUrl!));
+        final imageUrl = await uploadTask.ref.getDownloadURL();
+        log(imageUrl, name: 'get download URl');
         await firebaseFirestore
             .collection('notes')
             .doc(uid)
             .collection('note')
             .add(
-              updatedNoted.toDocument(),
+              note.copyWith(imageUrl: imageUrl).toDocument(),
             );
       } else {
         await firebaseFirestore
@@ -81,8 +86,17 @@ class NoteRepoImpl implements NoteRepository {
   Stream<List<NoteModel>> getNotes() {
     try {
       final uid = firebaseAuth.currentUser!.uid;
-      final firestoreCollection = firebaseFirestore.collection('notes');
-      return firestoreCollection.where('uid', isEqualTo: uid).snapshots().map(
+      final firestoreCollection =
+          firebaseFirestore.collection('notes').doc(uid).collection('note');
+      log(
+        firestoreCollection
+            .snapshots()
+            .map(
+              (event) => event.docs.map(NoteModel.fromJson).toList(),
+            )
+            .toString(),
+      );
+      return firestoreCollection.snapshots().map(
             (event) => event.docs.map(NoteModel.fromJson).toList(),
           );
     } on FirebaseException catch (e) {

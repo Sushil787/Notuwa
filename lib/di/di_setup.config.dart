@@ -71,8 +71,8 @@ Future<_i1.GetIt> $initGetIt(
       userRemoteDataSource: gh<_i11.UserRemoteDataSource>()));
   gh.singleton<_i15.AuthCubit>(
       _i15.AuthCubit(userRepository: gh<_i13.UserRepository>()));
-  gh.singleton<_i16.NoteCubit>(
-      _i16.NoteCubit(noteRepository: gh<_i8.NoteRepository>()));
+  gh.factory<_i16.NoteCubit>(
+      () => _i16.NoteCubit(noteRepository: gh<_i8.NoteRepository>()));
   gh.factory<_i17.ProfileCubit>(
       () => _i17.ProfileCubit(userRepository: gh<_i13.UserRepository>()));
   return getIt;

@@ -58,6 +58,7 @@ dependencies:
   go_router: ^9.0.3
   injectable: ^2.1.2
   animated_text_kit: ^4.2.2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

@@ -18,7 +18,7 @@ class NoteModel {
       id: json['id'] as String,
       title: json['title'] as String,
       body: json['body'] as String,
-      imageUrl: json['imageUrl'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
   }
 
