@@ -143,7 +143,11 @@ class _NoteScreenState extends State<NoteScreen> {
   /// AppBar widget
   AppBar appBar(BuildContext context) {
     return AppBar(
-      title: const Text('noteTitle'),
+      backgroundColor: LightColor.whiteSmokeLight,
+      title: Text(
+        'noteTitle',
+        style: context.textTheme.headlineMedium,
+      ),
       leading: GestureDetector(
         onTap: () {
           context.pop();

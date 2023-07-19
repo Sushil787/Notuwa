@@ -9,7 +9,7 @@ class LightColor {
   static const Color secondaryColor = Colors.black;
 
   /// White Smoke
-  static const Color whiteSmokeLight = Color(0xfff8f8f8);
+  static const Color whiteSmokeLight = Color.fromARGB(255, 182, 179, 179);
 
   /// White Smoke
   static const Color whiteSmoke = Color(0xfff2f2f2);

@@ -8,8 +8,11 @@ import 'package:kuraa/core/helper/extension/context_extension.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/theme/app_colors.dart';
 import 'package:kuraa/features/notes/cubit/note_cubit.dart';
+import 'package:kuraa/features/notes/widgets/note_widget.dart';
 import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
 import 'package:kuraa/features/user/presentation/ui/widgets/profile_widget.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 /// Home Screen
 
@@ -35,8 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: LightColor.whiteSmokeLight,
+        elevation: 2,
+        title: Text(
           'Mero Note',
+          style: context.textTheme.headlineMedium,
         ),
         actions: [
           profileBlock(),
@@ -44,9 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
         child: BlocConsumer<NoteCubit, NoteState>(
           listener: (context, state) {
             if (state is NoInternetState) {
@@ -61,23 +65,28 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state.notes.isEmpty) {
                 return const Center(child: Text('No Notes Added'));
               }
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
+              return StaggeredGridView.countBuilder(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
                 itemCount: state.notes.length,
                 itemBuilder: (context, index) {
                   final note = state.notes[index];
-                  return note.imageUrl != null
-                      ? SizedBox(
-                          height: context.height * .3,
-                          child: Column(
-                            children: [
-                              Image.network(note.imageUrl!),
-                            ],
-                          ),
-                        )
-                      : Container();
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: NoteWidget(note: note, callback: () {}),
+                    ),
+                  );
+                },
+                staggeredTileBuilder: (index) {
+                  return StaggeredTile.count(1, index.isEven ? 1.4 : 1.6);
                 },
               );
             }
@@ -98,16 +107,26 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: LightColor.eclipse,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          context.push(AppRoutes.note);
-        },
-      ),
+      floatingActionButton: floatingButton(context),
     );
   }
 
+
+
+  
+
+  /// Returns [FloatingActionButton] widget
+  FloatingActionButton floatingButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: LightColor.eclipse,
+      child: const Icon(Icons.add),
+      onPressed: () {
+        context.push(AppRoutes.note);
+      },
+    );
+  }
+
+  /// Builds the profile according to Internet Status
   BlocBuilder<NoteCubit, NoteState> profileBlock() {
     return BlocBuilder<NoteCubit, NoteState>(
       builder: (context, state) {
