@@ -23,6 +23,12 @@ class NoteDeletedState extends NoteState {
   @override
   List<Object?> get props => [];
 }
+///No internet state
+class NoInternetState extends NoteState{
+  @override
+  List<Object?> get props => [];
+
+}
 
 /// Note Success State
 class NoteSuccessState extends NoteState{

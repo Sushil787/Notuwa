@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -40,11 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'Mero Note',
         ),
         actions: [
-          ProfileWidget(
-            onTap: () {
-              context.pushNamed(AppRoutes.profile, extra: widget.uid);
-            },
-          ),
+          profileBlock(),
           HorizontalGap.s,
         ],
       ),
@@ -53,7 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
           horizontal: 8,
         ),
         child: BlocConsumer<NoteCubit, NoteState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is NoInternetState) {
+              context.showSnackBar(
+                message: 'No internet',
+                toastType: ToastType.error,
+              );
+            }
+          },
           builder: (context, state) {
             if (state is NoteLoadedState) {
               if (state.notes.isEmpty) {
@@ -79,6 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               );
             }
+            if (state is NoInternetState) {
+              return const Center(
+                child: Text('No Internet'),
+              );
+            }
             if (state is NoteLoadingState) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -95,10 +102,27 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: LightColor.eclipse,
         child: const Icon(Icons.add),
         onPressed: () {
-          
           context.push(AppRoutes.note);
         },
       ),
+    );
+  }
+
+  BlocBuilder<NoteCubit, NoteState> profileBlock() {
+    return BlocBuilder<NoteCubit, NoteState>(
+      builder: (context, state) {
+        if (state is NoInternetState) {
+          return const Icon(Icons.person);
+        }
+        return ProfileWidget(
+          onTap: () {
+            context.pushNamed(
+              AppRoutes.profile,
+              extra: widget.uid,
+            );
+          },
+        );
+      },
     );
   }
 }

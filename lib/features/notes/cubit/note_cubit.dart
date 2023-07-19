@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kuraa/core/helper/network_info.dart';
 import 'package:kuraa/features/notes/domain/model/notes_model.dart';
 import 'package:kuraa/features/notes/domain/repository/note_repository.dart';
 
@@ -14,13 +17,21 @@ part 'note_state.dart';
 ///Note Cubit
 class NoteCubit extends Cubit<NoteState> {
   /// Constructor
-  NoteCubit({required this.noteRepository}) : super(NoteInitial());
+  NoteCubit({
+    required this.noteRepository,
+    required this.networkInfo,
+  }) : super(NoteInitial());
 
   /// Note Repository
   final NoteRepository noteRepository;
 
+  /// Network Info
+  final NetworkInfo networkInfo;
+
   /// AddNote Method
-  Future<void> addNote({required NoteModel note}) async {
+  Future<void> addNote({
+    required NoteModel note,
+  }) async {
     try {
       emit(NoteLoadingState());
       await noteRepository.createNote(note: note);
@@ -44,11 +55,23 @@ class NoteCubit extends Cubit<NoteState> {
   /// GetNote Method
   Future<void> getNotes() async {
     try {
+      // if (await networkInfo.isConnected()) {
       emit(NoteLoadingState());
-      noteRepository.getNotes().listen((notes) {
-        log(name: 'mero note', notes.length.toString());
-        emit(NoteLoadedState(notes));
+      networkInfo.subs.onData((data) {
+        if (data == ConnectivityResult.ethernet ||
+            data == ConnectivityResult.mobile ||
+            data == ConnectivityResult.wifi) {
+          noteRepository.getNotes().listen((notes) async {
+            log(name: 'mero note', notes.length.toString());
+            emit(NoteLoadedState(notes));
+          });
+        } else {
+          emit(NoInternetState());
+        }
       });
+      // } else {
+      //   emit(NoInternetState());
+      // }
     } on FirebaseException catch (e) {
       emit(NoteLoadFailState(e.code));
     } catch (e) {
