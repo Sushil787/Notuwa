@@ -25,6 +25,7 @@ analyzer:
     - "**.config.dart"
     - "*_test.dart"
     - "**/generated_plugin_registrant.dart"
+    - "*.yaml"
  errors:
     invalid_annotation_target: ignore
 

@@ -59,6 +59,7 @@ dependencies:
   injectable: ^2.1.2
   animated_text_kit: ^4.2.2
   uuid: ^3.0.7
+  staggered_grid_view_flutter: ^0.0.4
 
 dev_dependencies:
   flutter_test:

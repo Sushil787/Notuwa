@@ -109,7 +109,7 @@ class NoteRepoImpl implements NoteRepository {
   @override
   Future<void> updateNote({required NoteModel note}) async {
     try {
-      final uid = firebaseAuth.currentUser!.uid;
+      // final uid = firebaseAuth.currentUser!.uid;
 
       // final firestoreCollection = firebaseFirestore.collection('notes');
       // return firestoreCollection.where('uid', isEqualTo: ).snapshots().map(

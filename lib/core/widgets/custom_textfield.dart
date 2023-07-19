@@ -17,7 +17,7 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
 
   /// Hint text
-  String? Function(String?)? validator;
+  final String? Function(String?)? validator;
 
   /// Is Pasword Field
   final bool isPassword;

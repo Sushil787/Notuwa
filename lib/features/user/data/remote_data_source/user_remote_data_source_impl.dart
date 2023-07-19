@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 import 'package:kuraa/features/user/data/model/user_model.dart';
 import 'package:kuraa/features/user/domain/entities/user_entity.dart';
 import 'package:kuraa/features/user/domain/repository/user_remote_data_source.dart';
-import 'package:uuid/uuid.dart';
 
 /// User Data Source
 @Injectable(as: UserRemoteDataSource)
