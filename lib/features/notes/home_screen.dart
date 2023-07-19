@@ -1,15 +1,19 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kuraa/core/constants/route_constants.dart';
+import 'package:kuraa/core/helper/extension/context_extension.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/theme/app_colors.dart';
 import 'package:kuraa/features/notes/cubit/note_cubit.dart';
 import 'package:kuraa/features/user/data/model/user_model.dart';
 import 'package:kuraa/features/user/presentation/cubit/profile/cubit/profile_cubit.dart';
 import 'package:kuraa/features/user/presentation/ui/widgets/profile_widget.dart';
+import 'package:uuid/uuid.dart';
 
 /// Home Screen
 
@@ -47,29 +51,46 @@ class _HomeScreenState extends State<HomeScreen> {
           HorizontalGap.s,
         ],
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+        ),
         child: BlocConsumer<NoteCubit, NoteState>(
           listener: (context, state) {},
           builder: (context, state) {
             if (state is NoteLoadedState) {
               if (state.notes.isEmpty) {
-                return const Text('No Notes Added');
+                return const Center(child: Text('No Notes Added'));
               }
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
+                itemCount: state.notes.length,
                 itemBuilder: (context, index) {
-                  return const Text('hello');
+                  final note = state.notes[index];
+                  return note.imageUrl != null
+                      ? SizedBox(
+                          height: context.height * .3,
+                          child: Column(
+                            children: [
+                              Image.network(note.imageUrl!),
+                            ],
+                          ),
+                        )
+                      : Container();
                 },
               );
             }
             if (state is NoteLoadingState) {
-              return const CircularProgressIndicator(
-                color: LightColor.grey,
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: LightColor.grey,
+                ),
               );
             }
-            return const Text('No Data');
+            log(state.toString(), name: 'state');
+            return const Center(child: Text('No Data'));
           },
         ),
       ),
@@ -77,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: LightColor.eclipse,
         child: const Icon(Icons.add),
         onPressed: () {
+          
           context.push(AppRoutes.note);
         },
       ),

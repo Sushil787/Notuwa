@@ -24,6 +24,15 @@ class NoteDeletedState extends NoteState {
   List<Object?> get props => [];
 }
 
+/// Note Success State
+class NoteSuccessState extends NoteState{
+  @override
+  List<Object?> get props => [];
+
+}
+
+
+
 /// Note Loading State
 class NoteUpdatedState extends NoteState {
   @override
