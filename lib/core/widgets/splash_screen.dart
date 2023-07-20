@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     textStyle: context.textTheme.headlineLarge,
                   ),
                   FadeAnimatedText(
-                    ' Welcome to maan ka kuraa',
+                    ' Welcome to ',
                     textAlign: TextAlign.center,
                     textStyle: context.textTheme.headlineLarge,
                   ),

@@ -27,11 +27,11 @@ class NoteWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: note.title!.length < 8
-              ? Colors.blue.shade400
+              ? Colors.blue.shade200
               : note.title!.length < 12
-                  ? Colors.yellow.shade400
+                  ? Colors.green.shade200
                   : note.title!.length < 19
-                      ? Colors.red.shade400
+                      ? Colors.red.shade200
                       : Colors.deepOrange.shade400,
         ),
         child: Column(

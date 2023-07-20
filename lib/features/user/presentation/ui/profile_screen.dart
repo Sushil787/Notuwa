@@ -36,14 +36,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 10,
         leading: GestureDetector(
           child: const Icon(Icons.arrow_back),
           onTap: () {
             GoRouter.of(context).pop();
           },
         ),
-        title: const Text(
-          'Maan ka Kura',
+        title: Text(
+          'Profile',
+          style: context.textTheme.headlineMedium,
         ),
       ),
       body: Center(
@@ -127,10 +130,6 @@ class ProfileImage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Profile',
-            style: context.textTheme.headlineLarge,
-          ),
           VerticalGap.s,
           CircleAvatar(
             radius: 44,
@@ -149,6 +148,7 @@ class ProfileImage extends StatelessWidget {
                     ),
                   ),
           ),
+          VerticalGap.l,
           customText(
             type: 'username',
             text: user.uname!,

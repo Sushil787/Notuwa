@@ -44,8 +44,11 @@ class NoteCubit extends Cubit<NoteState> {
   }
 
   /// UpdateNote Method
-  Future<void> updateNote() async {
-    try {} on FirebaseException catch (e) {
+  Future<void> updateNote({required NoteModel note}) async {
+    try {
+      emit(NoteLoadingState());
+      await noteRepository.updateNote(note: note);
+    } on FirebaseException catch (e) {
       emit(NoteLoadFailState(e.code));
     } catch (e) {
       emit(NoteLoadFailState(e.toString()));
@@ -80,8 +83,12 @@ class NoteCubit extends Cubit<NoteState> {
   }
 
   /// Delete Note Method
-  Future<void> deleteNotes() async {
-    try {} on FirebaseException catch (e) {
+  Future<void> deleteNotes({required String id}) async {
+    try {
+      emit(NoteLoadingState());
+      await noteRepository.deleteNote(id: id);
+      // emit(const NoteSuccessState(message: 'note deleted successfully'));
+    } on FirebaseException catch (e) {
       emit(NoteLoadFailState(e.code));
     } catch (e) {
       emit(NoteLoadFailState(e.toString()));

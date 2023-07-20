@@ -68,7 +68,7 @@ class _NoteScreenState extends State<NoteScreen> {
                   VerticalGap.xs,
                   formWidget(context),
                   VerticalGap.l,
-                  if (widget.createMode!) saveButton(state, context)
+                  if (editMode!) saveButton(state, context)
                 ],
               );
             },
@@ -85,21 +85,41 @@ class _NoteScreenState extends State<NoteScreen> {
       buttonText: 'Save',
       onButtonPressed: () async {
         if (formKey.currentState!.validate()) {
-          await context.read<NoteCubit>().addNote(
-                note: NoteModel(
-                  title: titleEditingController.text,
-                  body: bodyEditingController.text,
-                  id: uuid.v4(),
-                  imageUrl: imagePath,
-                ),
-              );
-          if (context.mounted) {
-            context
-              ..showSnackBar(
-                message: 'Note Added Successfully',
-                toastType: ToastType.success,
-              )
-              ..pop();
+          if (widget.createMode!) {
+            await context.read<NoteCubit>().addNote(
+                  note: NoteModel(
+                    title: titleEditingController.text,
+                    body: bodyEditingController.text,
+                    id: uuid.v4(),
+                    imageUrl: imagePath,
+                  ),
+                );
+            if (context.mounted) {
+              context
+                ..showSnackBar(
+                  message: 'Note Added Successfully',
+                  toastType: ToastType.success,
+                )
+                ..pop();
+            }
+            log(name: 'note', 'note add called');
+          } else {
+            await context.read<NoteCubit>().updateNote(
+                  note: widget.note!.copyWith(
+                    title: titleEditingController.text,
+                    body: bodyEditingController.text,
+                  ),
+                );
+            log(name: 'note', 'note update  note called');
+
+            if (context.mounted) {
+              context
+                ..showSnackBar(
+                  message: 'Note Updated Successfully',
+                  toastType: ToastType.success,
+                )
+                ..pop();
+            }
           }
         }
       },
@@ -174,7 +194,8 @@ class _NoteScreenState extends State<NoteScreen> {
   /// AppBar widget
   AppBar appBar(BuildContext context) {
     return AppBar(
-      backgroundColor: LightColor.whiteSmokeLight,
+      backgroundColor: Colors.white,
+      elevation: 10,
       title: Text(
         widget.note?.title != null ? widget.note!.title! : 'note',
         style: context.textTheme.headlineMedium,
@@ -189,10 +210,21 @@ class _NoteScreenState extends State<NoteScreen> {
         if (!widget.createMode!) ...[
           editButton(),
           HorizontalGap.l,
-          const Icon(
-            Icons.delete,
-            size: 28,
-            color: LightColor.eclipse,
+          GestureDetector(
+            onTap: () async {
+              await context.read<NoteCubit>().deleteNotes(id: widget.note!.id!);
+              context
+                ..showSnackBar(
+                  message: 'Note Deleted Successfully',
+                  toastType: ToastType.success,
+                )
+                ..pop();
+            },
+            child: const Icon(
+              Icons.delete,
+              size: 28,
+              color: LightColor.eclipse,
+            ),
           ),
         ],
         HorizontalGap.l,
@@ -203,7 +235,7 @@ class _NoteScreenState extends State<NoteScreen> {
   GestureDetector editButton() {
     return GestureDetector(
       onTap: () {
-        log('edip button pressed');
+        log('edit button pressed');
         setState(() {
           editMode = !editMode!;
         });

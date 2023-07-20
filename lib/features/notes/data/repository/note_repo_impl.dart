@@ -68,12 +68,18 @@ class NoteRepoImpl implements NoteRepository {
   @override
   Future<void> deleteNote({required String id}) async {
     final uid = firebaseAuth.currentUser!.uid;
-    await firebaseFirestore
-        .collection('notes')
+
+    final firestoreCollection = firebaseFirestore.collection('notes');
+    final snapshot = await firestoreCollection
         .doc(uid)
         .collection('note')
-        .doc(id)
-        .delete();
+        .where(
+          'id',
+          isEqualTo: id,
+        )
+        .get();
+
+    await snapshot.docs[0].reference.delete();
 
     try {} on FirebaseException catch (e) {
       throw FirebaseException(code: e.code, plugin: '');
@@ -109,9 +115,25 @@ class NoteRepoImpl implements NoteRepository {
   @override
   Future<void> updateNote({required NoteModel note}) async {
     try {
-      // final uid = firebaseAuth.currentUser!.uid;
+      final uid = firebaseAuth.currentUser!.uid;
 
-      // final firestoreCollection = firebaseFirestore.collection('notes');
+      final firestoreCollection = firebaseFirestore.collection('notes');
+      final snapshot = await firestoreCollection
+          .doc(uid)
+          .collection('note')
+          .where(
+            'id',
+            isEqualTo: note.id,
+          )
+          .get();
+
+      log(
+        snapshot.docs.first.data().toString(),
+        name: 'document snapshot update',
+      );
+
+      await snapshot.docs[0].reference.update(note.toDocument());
+
       // return firestoreCollection.where('uid', isEqualTo: ).snapshots().map(
       //       (event) => event.docs.map(NoteModel.fromJson).toList(),
       //     );

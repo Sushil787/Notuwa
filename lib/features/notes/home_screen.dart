@@ -37,10 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightColor.whiteSmoke,
       appBar: AppBar(
-        backgroundColor: LightColor.whiteSmokeLight,
-        elevation: 2,
+        backgroundColor: Colors.white,
+        elevation: 10,
         title: Text(
           'Mero Note',
           style:
@@ -88,7 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         callback: () {
                           context.push(
                             AppRoutes.note,
-                            extra: {'note': note, 'createMode': false},
+                            extra: {
+                              'note': note,
+                              'createMode': false,
+                            },
                           );
                         },
                       ),
