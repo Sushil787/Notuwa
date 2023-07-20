@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
                 staggeredTileBuilder: (index) {
-                  return StaggeredTile.count(1, index.isEven ? 1.4 : 1.6);
+                  return const StaggeredTile.count(1, 1.6);
                 },
               );
             }

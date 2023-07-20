@@ -5,6 +5,9 @@ class LightColor {
   /// Primary Color
   static const Color primaryColor = Color(0xffe5e5e5);
 
+  /// app bar color
+  static const Color backColor = Color(0xffE2F1FD);
+
   /// Secondary Color
   static const Color secondaryColor = Colors.black;
 

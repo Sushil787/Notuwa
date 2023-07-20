@@ -85,7 +85,7 @@ class _NoteScreenState extends State<NoteScreen> {
       buttonText: 'Save',
       onButtonPressed: () async {
         if (formKey.currentState!.validate()) {
-          if (widget.createMode!) {
+          if (widget.createMode! && imagePath != null) {
             await context.read<NoteCubit>().addNote(
                   note: NoteModel(
                     title: titleEditingController.text,
