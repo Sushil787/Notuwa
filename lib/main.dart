@@ -67,18 +67,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   /// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: routerConfig.router,
-          title: 'Chat appa',
-          theme: AppTheme.lightThemeData,
-          darkTheme: AppTheme.darkThemeData,
-          themeMode:
-              state == ThemeState.light ? ThemeMode.light : ThemeMode.dark,
-        );
-      },
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: routerConfig.router,
+      title: 'Chat appa',
+      theme: AppTheme.lightThemeData,
+      darkTheme: AppTheme.darkThemeData,
+      themeMode: ThemeMode.light,
     );
   }
 }

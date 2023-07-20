@@ -23,28 +23,17 @@ class NoteWidget extends StatelessWidget {
     return GestureDetector(
       onTap: callback,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: note.title!.length < 10
-              ? Colors.blue
-              : note.title!.length < 14
-                  ? Colors.yellow
-                  : note.title!.length < 20
-                      ? Colors.red
-                      : Colors.deepOrange,
-          // gradient: const LinearGradient(
-          //   colors: [
-          //     Color(0xffb9b9b9),
-          //     Color(0xff464646),
-          //   ],
-          //   stops: [0, 1],
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          // ),
+          color: note.title!.length < 8
+              ? Colors.blue.shade400
+              : note.title!.length < 12
+                  ? Colors.yellow.shade400
+                  : note.title!.length < 19
+                      ? Colors.red.shade400
+                      : Colors.deepOrange.shade400,
         ),
-        // height: context.height * .6,
-        // width: context.width * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,11 +41,11 @@ class NoteWidget extends StatelessWidget {
               note.title!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.headlineSmall!.copyWith(
+              style: context.textTheme.bodyMedium!.copyWith(
                 color: Colors.black,
               ),
             ),
-            VerticalGap.s,
+            VerticalGap.xxs,
             if (note.imageUrl != null)
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -67,13 +56,14 @@ class NoteWidget extends StatelessWidget {
             else
               const SizedBox.shrink(),
             VerticalGap.s,
-            Text(
-              note.body! +
-                  'lksdjflksjdlfjlsadjfkljasldkfjlsd lfkjasldflsak dflak sdl aslkdfjalskdj flkasd flkajsdlkfjasdlkfjald flakjd flak',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.textTheme.bodyMedium!.copyWith(
-                color: Colors.black,
+            Flexible(
+              child: Text(
+                note.body!,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                style: context.textTheme.bodySmall!.copyWith(
+                  color: Colors.black,
+                ),
               ),
             ),
           ],

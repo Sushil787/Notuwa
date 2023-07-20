@@ -69,8 +69,10 @@ Future<_i1.GetIt> $initGetIt(
       ));
   gh.factory<_i13.UserRepository>(() => _i14.UserRepositoryImpl(
       userRemoteDataSource: gh<_i11.UserRemoteDataSource>()));
-  gh.singleton<_i15.AuthCubit>(
-      _i15.AuthCubit(userRepository: gh<_i13.UserRepository>()));
+  gh.singleton<_i15.AuthCubit>(_i15.AuthCubit(
+    userRepository: gh<_i13.UserRepository>(),
+    networkInfo: gh<_i7.NetworkInfo>(),
+  ));
   gh.factory<_i16.NoteCubit>(() => _i16.NoteCubit(
         noteRepository: gh<_i8.NoteRepository>(),
         networkInfo: gh<_i7.NetworkInfo>(),

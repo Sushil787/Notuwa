@@ -37,12 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: LightColor.whiteSmoke,
       appBar: AppBar(
         backgroundColor: LightColor.whiteSmokeLight,
         elevation: 2,
         title: Text(
           'Mero Note',
-          style: context.textTheme.headlineMedium,
+          style:
+              context.textTheme.headlineMedium!.copyWith(color: Colors.black87),
         ),
         actions: [
           profileBlock(),
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
         child: BlocConsumer<NoteCubit, NoteState>(
           listener: (context, state) {
             if (state is NoInternetState) {
@@ -81,7 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      child: NoteWidget(note: note, callback: () {}),
+                      child: NoteWidget(
+                        note: note,
+                        callback: () {
+                          context.push(
+                            AppRoutes.note,
+                            extra: {'note': note, 'createMode': false},
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -111,17 +121,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
-  
-
   /// Returns [FloatingActionButton] widget
   FloatingActionButton floatingButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: LightColor.eclipse,
       child: const Icon(Icons.add),
       onPressed: () {
-        context.push(AppRoutes.note);
+        context.push(
+          AppRoutes.note,
+          extra: {'note': null, 'createMode': true},
+        );
       },
     );
   }

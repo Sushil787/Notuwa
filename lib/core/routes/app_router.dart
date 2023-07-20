@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:kuraa/core/constants/route_constants.dart';
 import 'package:kuraa/core/widgets/splash_screen.dart';
+import 'package:kuraa/features/notes/domain/model/notes_model.dart';
 import 'package:kuraa/features/notes/home_screen.dart';
 import 'package:kuraa/features/notes/main_screen.dart';
 import 'package:kuraa/features/notes/note_screen.dart';
@@ -52,7 +53,13 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.note,
         name: AppRoutes.note,
-        builder: (context, state) => const NoteScreen(),
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>;
+          return NoteScreen(
+            createMode: args['createMode'] as bool,
+            note: args['note'] as NoteModel?,
+          );
+        },
       ),
     ],
   );

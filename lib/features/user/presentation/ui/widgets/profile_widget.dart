@@ -23,7 +23,6 @@ class ProfileWidget extends StatelessWidget {
           height: 42,
           width: 42,
           decoration: const BoxDecoration(
-            color: Colors.amber,
             shape: BoxShape.circle,
           ),
           child: BlocBuilder<ProfileCubit, ProfileState>(

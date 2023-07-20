@@ -25,7 +25,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       userRepository.getSingleUser(uid: uid).listen((user) {
         emit(ProfileLoaded(currentUser: user.first));
-        log(user.toString());
       });
     } on FirebaseException catch (_) {
       emit(ProfileFailure(message: _.code));

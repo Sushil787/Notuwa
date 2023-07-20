@@ -29,7 +29,6 @@ class SignupSuccess extends AuthState {
   ///Constructor
   @override
   List<Object?> get props => [];
-
 }
 
 ///  Auth Success State
@@ -42,6 +41,17 @@ class Authenticated extends AuthState {
   @override
   List<Object> get props => [uid];
 }
+
+// /// NoInternet State
+// class NoInternetStae extends AuthState {
+//   ///
+//   const NoInternetStae({required this.message});
+
+//   /// Faliure Messsage
+//   final String message;
+//   @override
+//   List<Object> get props => [message];
+// }
 
 /// Auth Faliure State
 class AuthFailure extends AuthState {

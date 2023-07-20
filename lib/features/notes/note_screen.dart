@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +15,13 @@ import 'package:uuid/uuid.dart';
 /// Note Screen
 class NoteScreen extends StatefulWidget {
   ///
-  const NoteScreen({super.key});
+  const NoteScreen({this.note, this.createMode = false, super.key});
+
+  /// edit mode
+  final bool? createMode;
+
+  /// NoteModel
+  final NoteModel? note;
 
   @override
   State<NoteScreen> createState() => _NoteScreenState();
@@ -23,14 +29,28 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> {
   String? imagePath;
-  bool editMode = false;
+  bool? editMode;
+
   final TextEditingController titleEditingController = TextEditingController();
   final TextEditingController bodyEditingController = TextEditingController();
   final uuid = const Uuid();
+  @override
+  void initState() {
+    super.initState();
+    widget.note != null
+        ? titleEditingController.text = widget.note!.title!
+        : titleEditingController.text = '';
+    widget.note != null
+        ? bodyEditingController.text = widget.note!.body!
+        : bodyEditingController.text = '';
+    editMode = widget.createMode;
+  }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    // if (widget.createMode) editMode = false;
+
     return Scaffold(
       appBar: appBar(context),
       body: Container(
@@ -48,37 +68,41 @@ class _NoteScreenState extends State<NoteScreen> {
                   VerticalGap.xs,
                   formWidget(context),
                   VerticalGap.l,
-                  if (editMode)
-                    CustomElevatedButton(
-                      isLoading: state is NoteLoadingState,
-                      buttonText: 'Save',
-                      onButtonPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          await context.read<NoteCubit>().addNote(
-                                note: NoteModel(
-                                  title: titleEditingController.text,
-                                  body: bodyEditingController.text,
-                                  id: uuid.v4(),
-                                  imageUrl: imagePath,
-                                ),
-                              );
-                          if (context.mounted) {
-                            context
-                              ..showSnackBar(
-                                message: 'Note Added Successfully',
-                                toastType: ToastType.success,
-                              )
-                              ..pop();
-                          }
-                        }
-                      },
-                    )
+                  if (widget.createMode!) saveButton(state, context)
                 ],
               );
             },
           ),
         ),
       ),
+    );
+  }
+
+  /// Button
+  CustomElevatedButton saveButton(NoteState state, BuildContext context) {
+    return CustomElevatedButton(
+      isLoading: state is NoteLoadingState,
+      buttonText: 'Save',
+      onButtonPressed: () async {
+        if (formKey.currentState!.validate()) {
+          await context.read<NoteCubit>().addNote(
+                note: NoteModel(
+                  title: titleEditingController.text,
+                  body: bodyEditingController.text,
+                  id: uuid.v4(),
+                  imageUrl: imagePath,
+                ),
+              );
+          if (context.mounted) {
+            context
+              ..showSnackBar(
+                message: 'Note Added Successfully',
+                toastType: ToastType.success,
+              )
+              ..pop();
+          }
+        }
+      },
     );
   }
 
@@ -98,7 +122,7 @@ class _NoteScreenState extends State<NoteScreen> {
               return null;
             },
             keyboardType: TextInputType.multiline,
-            readOnly: !editMode,
+            readOnly: !editMode!,
           ),
           VerticalGap.l,
           if (imagePath != null)
@@ -108,12 +132,19 @@ class _NoteScreenState extends State<NoteScreen> {
           else
             const SizedBox.shrink(),
           VerticalGap.l,
-          CustomElevatedButton(
-            onButtonPressed: () async {
-              await bottomSheet(context);
-            },
-            buttonText: 'Upload Image',
-          ),
+          if (widget.note?.imageUrl == null)
+            CustomElevatedButton(
+              onButtonPressed: () async {
+                await bottomSheet(context);
+              },
+              buttonText: 'Upload Image',
+            )
+          else
+            SizedBox(
+              child: Image.network(
+                widget.note!.imageUrl!,
+              ),
+            ),
           VerticalGap.l,
           const Text('note body'),
           VerticalGap.xs,
@@ -132,8 +163,8 @@ class _NoteScreenState extends State<NoteScreen> {
               ),
             ),
             keyboardType: TextInputType.multiline,
-            maxLines: editMode ? 16 : 20,
-            readOnly: !editMode,
+            maxLines: editMode! ? 16 : 20,
+            readOnly: !editMode!,
           ),
         ],
       ),
@@ -145,7 +176,7 @@ class _NoteScreenState extends State<NoteScreen> {
     return AppBar(
       backgroundColor: LightColor.whiteSmokeLight,
       title: Text(
-        'noteTitle',
+        widget.note?.title != null ? widget.note!.title! : 'note',
         style: context.textTheme.headlineMedium,
       ),
       leading: GestureDetector(
@@ -155,7 +186,15 @@ class _NoteScreenState extends State<NoteScreen> {
         child: const Icon(Icons.arrow_back),
       ),
       actions: [
-        editButton(),
+        if (!widget.createMode!) ...[
+          editButton(),
+          HorizontalGap.l,
+          const Icon(
+            Icons.delete,
+            size: 28,
+            color: LightColor.eclipse,
+          ),
+        ],
         HorizontalGap.l,
       ],
     );
@@ -164,15 +203,16 @@ class _NoteScreenState extends State<NoteScreen> {
   GestureDetector editButton() {
     return GestureDetector(
       onTap: () {
+        log('edip button pressed');
         setState(() {
-          editMode = !editMode;
+          editMode = !editMode!;
         });
       },
       child: Container(
         height: 32,
         width: 36,
         decoration: BoxDecoration(
-          color: editMode ? LightColor.grey : Colors.transparent,
+          color: editMode! ? LightColor.grey : Colors.transparent,
           borderRadius: const BorderRadius.all(
             Radius.circular(5),
           ),
