@@ -1,3 +1,5 @@
+// ignore_for_file: cast_nullable_to_non_nullable
+
 import 'package:go_router/go_router.dart';
 import 'package:kuraa/core/constants/route_constants.dart';
 import 'package:kuraa/core/widgets/splash_screen.dart';

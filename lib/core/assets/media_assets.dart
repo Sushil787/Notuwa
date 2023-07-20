@@ -10,4 +10,13 @@ class MediaAsset {
 
   /// Chatting Gif
   static const chattingGif = '$basePath/chatting.gif';
+
+  /// banner image
+  static const notuwaSplash = '$basePath/notuwasplash.png';
+
+  /// notuwa image
+  static const notuwa = '$basePath/notuwa.png';
+
+  /// notuwa image
+  static const logo = '$basePath/logo.png';
 }

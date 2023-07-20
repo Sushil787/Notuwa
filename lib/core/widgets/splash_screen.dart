@@ -33,29 +33,23 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 180,
-              child: Image.asset(MediaAsset.chattingGif),
-            ),
-            SizedBox(
-              height: 50,
-              child: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Maan ka Kuraaa',
-                    colors: [
-                      Colors.purple,
-                      Colors.blue,
-                      Colors.black,
-                      Colors.yellow,
-                    ],
-                    textStyle: context.textTheme.headlineLarge!,
-                  ),
-                ],
+              height: 70,
+              width: 240,
+              child: Image.asset(
+                MediaAsset.notuwaSplash,
               ),
             ),
+            // SizedBox(
+            //   height: 50,
+            //   child: AnimatedTextKit(
+            //     animatedTexts: [
+
+            //     ],
+            //   ),
+            // ),
             VerticalGap.m,
             SizedBox(
-              height: 70,
+              height: 60,
               child: AnimatedTextKit(
                 animatedTexts: [
                   FadeAnimatedText(
@@ -72,10 +66,15 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     textStyle: context.textTheme.headlineLarge,
                   ),
-                  FadeAnimatedText(
-                    ' Welcome to ',
-                    textAlign: TextAlign.center,
-                    textStyle: context.textTheme.headlineLarge,
+                  ColorizeAnimatedText(
+                    'Notuwa',
+                    colors: [
+                      Colors.purple,
+                      Colors.blue,
+                      Colors.black,
+                      Colors.yellow,
+                    ],
+                    textStyle: context.textTheme.headlineLarge!,
                   ),
                 ],
               ),
