@@ -34,6 +34,14 @@ flutter pub get
 ```
 ##### 
 
+
+To run this app locally or deploy it on a device, you will need the following:
+
+- **Flutter:** The app is built using Flutter, so you should have the Flutter SDK installed on your system. For instructions on installing Flutter, visit the official Flutter website: [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
+
+- **Android Studio:** To run the app on Android and iOS devices respectively, you will need Android Studio set up on your machine.
+
+
 ## Configuration
 
 Before running the app, you need to configure Firebase for authentication and database storage. Follow these steps to set up Firebase:
@@ -48,9 +56,6 @@ Before running the app, you need to configure Firebase for authentication and da
 
 5. Enable Firestore database in the Firebase Database settings.
 
-## Folder Structure
-
-The app's codebase is organized as follows:
 
 
 ##### flutter run
@@ -58,6 +63,98 @@ The app's codebase is organized as follows:
 ``` bash 
 flutter run
 ```
+
+## Folder Structure
+
+The app's codebase is organized as follows:
+```
+lib
+├── core
+│   ├── assets
+│   │   └── media_assets.dart
+│   ├── constants
+│   │   ├── app_constants.dart
+│   │   └── route_constants.dart
+│   ├── helper
+│   │   ├── extension
+│   │   │   ├── context_extension.dart
+│   │   │   └── string_extension.dart
+│   │   ├── gap.dart
+│   │   └── network_info.dart
+│   ├── routes
+│   │   └── app_router.dart
+│   ├── storage
+│   │   ├── data
+│   │   └── domain
+│   ├── theme
+│   │   ├── app_colors.dart
+│   │   ├── app_theme.dart
+│   │   └── theme_cubit.dart
+│   └── widgets
+│       ├── custom_button.dart
+│       ├── custom_textfield.dart
+│       └── splash_screen.dart
+├── di
+│   ├── app_module.dart
+│   ├── di_setup.config.dart
+│   └── di_setup.dart
+├── features
+│   ├── notes
+│   │   ├── cubit
+│   │   │   ├── note_cubit.dart
+│   │   │   └── note_state.dart
+│   │   ├── data
+│   │   │   ├── data_source
+│   │   │   └── repository
+│   │   │       └── note_repo_impl.dart
+│   │   ├── domain
+│   │   │   ├── model
+│   │   │   │   └── notes_model.dart
+│   │   │   └── repository
+│   │   │       └── note_repository.dart
+│   │   ├── home_screen.dart
+│   │   ├── main_screen.dart
+│   │   ├── note_screen.dart
+│   │   ├── presentation
+│   │   └── widgets
+│   │       ├── bottom_modal_sheet.dart
+│   │       └── note_widget.dart
+│   └── user
+│       ├── data
+│       │   ├── model
+│       │   │   └── user_model.dart
+│       │   ├── remote_data_source
+│       │   │   └── user_remote_data_source_impl.dart
+│       │   └── repository
+│       │       └── user_repository_impl.dart
+│       ├── domain
+│       │   ├── entities
+│       │   │   └── user_entity.dart
+│       │   └── repository
+│       │       ├── user_remote_data_source.dart
+│       │       └── user_repository.dart
+│       └── presentation
+│           ├── cubit
+│           │   ├── credential
+│           │   │   └── cubit
+│           │   │       ├── auth_cubit.dart
+│           │   │       └── auth_state.dart
+│           │   └── profile
+│           │       └── cubit
+│           │           ├── profile_cubit.dart
+│           │           └── profile_state.dart
+│           └── ui
+│               ├── all_user_screen.dart
+│               ├── login_screen.dart
+│               ├── profile_screen.dart
+│               ├── signup_screen.dart
+│               └── widgets
+│                   └── profile_widget.dart
+├── firebase_options.dart
+├── main.dart
+└── observer.dart
+```
+
 
 
 ## Contributing
