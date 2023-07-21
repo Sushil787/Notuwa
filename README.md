@@ -159,7 +159,7 @@ lib
 <p>
   <img src="./screenshots/1.png" width="300" title="hover text" style="border: 2px solid red;">
   <img src="./screenshots/2.png" width="300" alt="accessibility text" style="border: 2px solid blue;">
-    <img src="./screenshots/8.png" width="300" alt="accessibility text" style="border: 2px solid blue;">
+    <img src="./screenshots/3.png" width="300" alt="accessibility text" style="border: 2px solid blue;">
     <img src="./screenshots/6.png" width="300" alt="accessibility text" style="border: 2px solid blue;">  <img src="./screenshots/7.png" width="300" alt="accessibility text" style="border: 2px solid blue;">
 </p>
 
