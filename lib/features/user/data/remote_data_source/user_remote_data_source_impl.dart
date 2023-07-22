@@ -242,4 +242,16 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  Future<void> deleteAccount({required String uid}) async {
+    try {
+      final userCollection = firebaseFirestore.collection('users');
+      await userCollection.doc(uid).delete();
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }
