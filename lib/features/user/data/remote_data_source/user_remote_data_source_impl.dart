@@ -185,6 +185,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<void> signIn({required UserEntity user}) async {
     try {
+      final userCollection = firebaseFirestore.collection('users');
+
+      final userData =
+          await userCollection.where('email', isEqualTo: user.email).get();
+      if (userData.docs.isEmpty) {
+        throw FirebaseAuthException(code: 'user-not-found');
+      }
       await firebaseAuth
           .signInWithEmailAndPassword(
             email: user.email!,
@@ -247,7 +254,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> deleteAccount({required String uid}) async {
     try {
       final userCollection = firebaseFirestore.collection('users');
+      // Delete notes subcollection for the user
+      final userNotesCollection = userCollection.doc(uid).collection('notes');
+      final userNotesQuerySnapshot = await userNotesCollection.get();
+      for (final noteSnapshot in userNotesQuerySnapshot.docs) {
+        await noteSnapshot.reference.delete();
+      }
       await userCollection.doc(uid).delete();
+      await firebaseAuth.signOut();
+      await firebaseAuth.currentUser!.delete();
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code);
     } catch (e) {

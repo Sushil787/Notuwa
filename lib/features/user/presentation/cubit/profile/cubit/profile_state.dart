@@ -12,6 +12,17 @@ class ProfileInitial extends ProfileState {
   List<Object> get props => [];
 }
 
+/// Account delete success state
+class AccDeleteSuccess extends ProfileState {
+  ///
+  const AccDeleteSuccess({required this.message});
+
+  /// Faliure Messsage
+  final String message;
+  @override
+  List<Object> get props => [message];
+}
+
 /// Loading State
 class ProfileLoading extends ProfileState {
   @override

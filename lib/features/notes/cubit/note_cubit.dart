@@ -65,8 +65,9 @@ class NoteCubit extends Cubit<NoteState> {
             data == ConnectivityResult.mobile ||
             data == ConnectivityResult.wifi) {
           noteRepository.getNotes().listen((notes) async {
-            log(name: 'mero note', notes.length.toString());
             emit(NoteLoadedState(notes));
+
+            log(name: 'mero note', notes.length.toString());
           });
         } else {
           emit(NoInternetState());

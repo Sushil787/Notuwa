@@ -58,6 +58,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 toastType: ToastType.error,
               );
             }
+            if (state is AccDeleteSuccess) {
+              context.showSnackBar(
+                message: state.message,
+                toastType: ToastType.error,
+              );
+            }
           },
           builder: (context, state) {
             if (state is ProfileLoading) {
@@ -103,6 +109,18 @@ class BuildProfileDetail extends StatelessWidget {
               }
             },
             buttonText: 'signout',
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: CustomElevatedButton(
+            onButtonPressed: () async {
+              if (context.mounted) {
+                GoRouter.of(context).pop();
+              }
+              await context.read<ProfileCubit>().deleteAccount(uid: user.uid!);
+            },
+            buttonText: 'delete account',
           ),
         )
       ],

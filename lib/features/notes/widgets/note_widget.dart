@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kuraa/core/assets/media_assets.dart';
 import 'package:kuraa/core/helper/extension/context_extension.dart';
 import 'package:kuraa/core/helper/gap.dart';
 import 'package:kuraa/core/theme/app_colors.dart';
@@ -44,8 +45,9 @@ class NoteWidget extends StatelessWidget {
             if (note.imageUrl != null)
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: SizedBox(
-                  child: Image.network(note.imageUrl!),
+                child: FadeInImage.assetNetwork(
+                  placeholder: MediaAsset.placeHolder,
+                  image: note.imageUrl!,
                 ),
               )
             else

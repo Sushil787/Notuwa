@@ -12,6 +12,8 @@ class AuthInitial extends AuthState {
   List<Object> get props => [];
 }
 
+
+
 /// Auth Loading State
 class AuthLoading extends AuthState {
   @override

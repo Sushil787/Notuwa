@@ -12,11 +12,11 @@ abstract class UserRemoteDataSource {
   ///Forgot Password
   Future<void> forgotPassword({required String email});
 
-  /// Delete A/C
-  Future<void> deleteAccount({required String uid});
-
   /// return [bool] isSignIn
   Future<bool> isSignIn();
+
+  /// Delete Account
+  Future<void> deleteAccount({required String uid});
 
   /// SignIn User
   Future<void> signIn({required UserEntity user});

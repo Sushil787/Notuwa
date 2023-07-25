@@ -6,6 +6,9 @@ abstract class UserRepository {
   /// Google Auth
   Future<void> googleAuth();
 
+  /// Delete Account
+  Future<void> deleteAccount({required String uid});
+
   /// Create User
   Future<void> getCreateCurrentUser({required UserEntity user});
 

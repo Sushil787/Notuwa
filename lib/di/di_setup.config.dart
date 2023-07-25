@@ -77,8 +77,10 @@ Future<_i1.GetIt> $initGetIt(
         noteRepository: gh<_i8.NoteRepository>(),
         networkInfo: gh<_i7.NetworkInfo>(),
       ));
-  gh.factory<_i17.ProfileCubit>(
-      () => _i17.ProfileCubit(userRepository: gh<_i13.UserRepository>()));
+  gh.factory<_i17.ProfileCubit>(() => _i17.ProfileCubit(
+        userRepository: gh<_i13.UserRepository>(),
+        networkInfo: gh<_i7.NetworkInfo>(),
+      ));
   return getIt;
 }
 

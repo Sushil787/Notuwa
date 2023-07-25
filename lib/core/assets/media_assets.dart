@@ -17,6 +17,9 @@ class MediaAsset {
   /// notuwa image
   static const notuwa = '$basePath/notuwa.png';
 
+  /// place holder
+  static const placeHolder = '$basePath/background.jpg';
+
   /// notuwa image
   static const logo = '$basePath/logo.png';
 }

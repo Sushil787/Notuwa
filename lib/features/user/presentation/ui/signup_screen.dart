@@ -55,6 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       message: 'Signup successful',
                       toastType: ToastType.success,
                     )
+                    
                     ..go(AppRoutes.main);
                 }
               },

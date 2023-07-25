@@ -145,4 +145,16 @@ class UserRepositoryImpl implements UserRepository {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  Future<void> deleteAccount({required String uid}) async {
+    try {
+      await userRemoteDataSource.deleteAccount(uid: uid);
+
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }
